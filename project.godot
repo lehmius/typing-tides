@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="typing-tides"
+run/main_scene="uid://dmwd0e0ebr1jj"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
