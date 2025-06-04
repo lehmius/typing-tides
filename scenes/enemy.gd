@@ -1,6 +1,6 @@
 ## This script controls the movement of the enemy character.
 ## The enemy moves towards a target position either defined as "target" (typically the player),
-## or can be passed a custom target via the move_enemy_to function.
+## or can be passed a custom target via the moveEnemyTo function.
 ##
 ## @export text: The word associated with the enemy.
 ## @export speed: The speed at which the enemy moves in pixels/second.
@@ -12,19 +12,18 @@ extends CharacterBody2D
 var target:Vector2 = Vector2(0,0) 	# Target the enemy is moving towards.
 
 func _ready() -> void:
-	pass
+	updateState()
 
 # _physics_process is not needed as physics interactions are not expected.
 func _process(delta: float) -> void:
-	move_enemy()
-	
+	moveEnemy()
 
 ## Moves the enemy across the scene to a custom location in a linear path.
 ##
 ## @param custom_target: The target the enemy should move towards
 ##
 ## @returns: void
-func move_enemy_to(custom_target:Vector2) -> void:
+func moveEnemyTo(custom_target:Vector2) -> void:
 	if position.distance_to(custom_target) > 5: # Only move if enemy is not already on top of target 
 		var direction = (custom_target - position).normalized()
 		velocity = direction * speed
@@ -33,5 +32,27 @@ func move_enemy_to(custom_target:Vector2) -> void:
 ## Moves the enemy across the scene to the target attribute in a linear path.
 ##
 ## @returns: void
-func move_enemy() -> void:
-	move_enemy_to(target)
+func moveEnemy() -> void:
+	moveEnemyTo(target)
+
+## Updates the state of the enemy to ensure consistent display properties.
+## Should be called on any changes of the state of the enemy instance.
+##
+## @returns: void
+func updateState() -> void:
+	$Label.text=text
+
+## Removes the first letter of the text variable from the enemy, simulating a hit.
+##
+## @returns: void
+func takeDamage() -> void:
+	text=text.substr(1,text.length())
+	if text.length()==0:
+		death()
+	updateState()
+
+## Handler method for if the enemy runs out of letters, simulating a "death".
+##
+## @returns: void
+func death() -> void:
+	queue_free()
