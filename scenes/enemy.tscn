@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://6hn82ehbrvrw"]
+[gd_scene load_steps=5 format=3 uid="uid://6hn82ehbrvrw"]
 
 [ext_resource type="Texture2D" uid="uid://cuv6av8inkani" path="res://assets/placeholder.png" id="1_7p1mj"]
+[ext_resource type="Script" uid="uid://djx0sxuemepaw" path="res://scenes/enemy.gd" id="1_md0e3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5uy6h"]
 animations = [{
@@ -17,10 +18,11 @@ animations = [{
 radius = 19.0263
 
 [node name="Enemy" type="CharacterBody2D"]
+script = ExtResource("1_md0e3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5uy6h")
-frame_progress = 0.659286
+frame_progress = 0.389928
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_c4w8v")
