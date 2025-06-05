@@ -16,7 +16,7 @@ var bobFrequency: float = 2.0		# Frequency of the bobbing motion
 var bobAmplitude: int = 4			# Amplitude of the bobbing motion
 var direction: Vector2 = Vector2(0,0)# Vector from position to target, updated when any move function is called
 @onready var visualSprite:AnimatedSprite2D = $AnimatedSprite2D
-var time:float = 0.0 				# Elapsed time since node was instantiated was started
+var time:float = 0.0 				# Elapsed time since node was instantiated
 const maxBobbingSeverity = 2		# Scales the bobbing motion to reach (at most) this value.
 
 func _ready() -> void:
@@ -63,7 +63,7 @@ func setBobbingDynamics() -> void:
 	var randomizedComponent:float = (randf()-0.5)/4 				# Adds a random amount to the size to give visual interest
 	var randomizedSize:float = clamp(relativeSize+randomizedComponent,0.1,0.9) * maxBobbingSeverity
 	
-	bobFrequency = maxBobbingSeverity -  randomizedSize 			# Larger size = Lower frequency for bobbing (slow movement)
+	bobFrequency = float(maxBobbingSeverity) -  randomizedSize 			# Larger size = Lower frequency for bobbing (slow movement)
 	bobAmplitude = randomizedSize * 10								# Larger size = Higher amplitude for bobbing (big movement)
 
 ## Updates the state of the enemy to ensure consistent display properties.
