@@ -13,12 +13,12 @@ extends CharacterBody2D
 var isPaused:bool = false 			# Flag to pause all movement
 var target:Vector2 = Vector2(0,0) 	# Target the enemy is moving towards.
 var bobFrequency: float = 2.0		# Frequency of the bobbing motion
-var bobAmplitude: int = 4			# Amplitude of the bobbing motion
+var bobAmplitude: float = 4.0			# Amplitude of the bobbing motion
 var direction: Vector2 = Vector2(0,0)# Vector from position to target, updated when any move function is called
 @onready var visualSprite:AnimatedSprite2D = $AnimatedSprite2D
 @onready var Player:Node			# TODO: Get Player node when Player scene is done
 var time:float = 0.0 				# Elapsed time since node was instantiated
-const maxBobbingSeverity = 2		# Scales the bobbing motion to reach (at most) this value.
+const maxBobbingSeverity:float = 2.0# Scales the bobbing motion to reach (at most) this value.
 
 func _ready() -> void:
 	updateState()
@@ -64,8 +64,8 @@ func setBobbingDynamics() -> void:
 	var randomizedComponent:float = (randf()-0.5)/4 				# Adds a random amount to the size to give visual interest
 	var randomizedSize:float = clamp(relativeSize+randomizedComponent,0.1,0.9) * maxBobbingSeverity
 	
-	bobFrequency = float(maxBobbingSeverity) -  randomizedSize 			# Larger size = Lower frequency for bobbing (slow movement)
-	bobAmplitude = randomizedSize * 10								# Larger size = Higher amplitude for bobbing (big movement)
+	bobFrequency = maxBobbingSeverity -  randomizedSize 	# Larger size = Lower frequency for bobbing (slow movement)
+	bobAmplitude = randomizedSize * 10						# Larger size = Higher amplitude for bobbing (big movement)
 
 ## Updates the state of the enemy to ensure consistent display properties.
 ## Should be called on any changes of the state of the enemy instance.
