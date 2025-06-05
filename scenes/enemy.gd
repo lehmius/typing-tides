@@ -16,6 +16,7 @@ var bobFrequency: float = 2.0		# Frequency of the bobbing motion
 var bobAmplitude: int = 4			# Amplitude of the bobbing motion
 var direction: Vector2 = Vector2(0,0)# Vector from position to target, updated when any move function is called
 @onready var visualSprite:AnimatedSprite2D = $AnimatedSprite2D
+@onready var Player:Node			# TODO: Get Player node when Player scene is done
 var time:float = 0.0 				# Elapsed time since node was instantiated
 const maxBobbingSeverity = 2		# Scales the bobbing motion to reach (at most) this value.
 
@@ -27,7 +28,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if not isPaused:
 		time+=delta
-		moveEnemy()
+		moveEnemyToPlayer()
 
 ## Moves the enemy across the scene to a custom location in a linear path.
 ##
@@ -41,11 +42,11 @@ func moveEnemyTo(custom_target:Vector2) -> void:
 		move_and_slide() # Automatically handles frame rate independent movement
 	addBobbing()
 
-## Moves the enemy across the scene to the target attribute in a linear path.
+## Moves the enemy across the scene to the player in a linear path.
 ##
 ## @returns: void
-func moveEnemy() -> void:
-	moveEnemyTo(target)
+func moveEnemyToPlayer() -> void:
+	moveEnemyTo(Player.position)
 
 ## Adds visual interest to fish movement by adding a sinoid bobbing motion to the movement.
 ## Does not affect the CollisionShape2D or Label, only the AnimatedSprite2D.
