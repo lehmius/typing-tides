@@ -25,7 +25,7 @@ func _ready() -> void:
 	setBobbingDynamics()
 
 # _physics_process is not needed as physics interactions are not expected.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if not isPaused:
 		time+=delta
 		moveEnemyToPlayer()
