@@ -24,7 +24,6 @@ func _ready() -> void:
 	updateState()
 	setBobbingDynamics()
 
-# _physics_process is not needed as physics interactions are not expected.
 func _physics_process(delta: float) -> void:
 	if not isPaused:
 		time+=delta
