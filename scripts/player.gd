@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 300
+@export var SPEED:int = 300
 
 func _physics_process(delta: float) -> void:
 	velocity.x = SPEED
