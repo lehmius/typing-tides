@@ -40,6 +40,7 @@ func getNextWord() -> String:
 func instanceEnemy() -> void:
 	var word = getNextWord()
 	var nextEnemy = enemyScene.instantiate() 
-	nextEnemy.position = Vector2(0,0) # TODO: Generate Position
+	nextEnemy.position = Vector2(680,randi_range(15,345))
+	nextEnemy.Player=player
 	enemyReferences+=[nextEnemy]
 	add_child(nextEnemy)

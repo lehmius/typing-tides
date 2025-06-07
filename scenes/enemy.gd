@@ -18,7 +18,7 @@ var bobFrequency: float = 2.0		# Frequency of the bobbing motion
 var bobAmplitude: float = 4.0			# Amplitude of the bobbing motion
 var direction: Vector2 = Vector2(0,0)# Vector from position to target, updated when any move function is called
 @onready var visualSprite:AnimatedSprite2D = $AnimatedSprite2D
-@onready var Player:Node			# TODO: Get Player node when Player scene is done
+@onready var Player:Node			# Holds a reference to the Player.
 var time:float = 0.0 				# Elapsed time since node was instantiated
 const maxBobbingSeverity:float = 2.0# Scales the bobbing motion to reach (at most) this value.
 
