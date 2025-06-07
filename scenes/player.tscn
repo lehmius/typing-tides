@@ -24,7 +24,6 @@ size = Vector2(28.9398, 33.812)
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
 script = ExtResource("1_g2els")
-speed = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_g2els")

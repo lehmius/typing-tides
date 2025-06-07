@@ -4,7 +4,7 @@ signal shoot(projectile, pressedKey, global_position)
 
 @export var speed:int = 300
 
-var Projectile = preload("res://scenes/projectile.tscn")
+#var Projectile = preload("res://scenes/projectile.tscn")
 
 func _ready() -> void:
 	pass
@@ -15,7 +15,8 @@ func _ready() -> void:
 ## @returns: void
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
-		shoot.emit(Projectile, event.keycode, global_position)
+#		shoot.emit(Projectile, event.keycode, global_position)
+		pass
 
 
 func _process(delta: float) -> void:
