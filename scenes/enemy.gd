@@ -7,6 +7,8 @@
 
 extends CharacterBody2D
 
+class_name Enemy
+
 @export var text:String = "default" #: Value of the word associated with the enemy
 @export var speed:int = 500 		#: Enemy speed in pixels/second
 
