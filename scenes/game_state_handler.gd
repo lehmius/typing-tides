@@ -38,9 +38,9 @@ func getNextWord() -> String:
 ##
 ## @returns: void
 func instanceEnemy() -> void:
-	var word = getNextWord()
 	var nextEnemy = enemyScene.instantiate() 
 	nextEnemy.position = Vector2(680,randi_range(15,345))
-	nextEnemy.Player=player
+	nextEnemy.Player = player
+	nextEnemy.text = getNextWord()
 	enemyReferences+=[nextEnemy]
 	add_child(nextEnemy)
