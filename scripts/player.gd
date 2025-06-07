@@ -23,5 +23,6 @@ func _process(delta: float) -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	velocity.x = speed
-	move_and_slide()
+	pass
+	#velocity.x = speed
+	#move_and_slide()
