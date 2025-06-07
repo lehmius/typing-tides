@@ -10,9 +10,11 @@ var enemyReferences:Array[Enemy] = []	# Holds references to each currently insta
 var player:Node							# Holds the reference to the player
 
 var playerScene: PackedScene = preload("res://scenes/player.tscn")
+var enemyScene: PackedScene = preload("res://scenes/enemy.tscn")
 
 func _ready() -> void:
 	instancePlayer()
+	instanceEnemy()
 
 ## Instances the Player within the game.
 ##
@@ -30,3 +32,14 @@ func getNextWord() -> String:
 	var wordlist="Katze,Hund,Haus,Apfel,Buch,Tisch,Wasser,Stadt,Fenster,Blume,Regen,Erde,Lächeln,Fahrrad,Mond".split(",")
 	var word=wordlist[randi_range(0,wordlist.size()-1)]
 	return word
+
+## Instances an enemy scene with a word from the getNextWord function, 
+## positions it at a random position just outside the screen and populates variables accordingly.
+##
+## @returns: void
+func instanceEnemy() -> void:
+	var word = getNextWord()
+	var nextEnemy = enemyScene.instantiate() 
+	nextEnemy.position = Vector2(0,0) # TODO: Generate Position
+	enemyReferences+=[nextEnemy]
+	add_child(nextEnemy)
