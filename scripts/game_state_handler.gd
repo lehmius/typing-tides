@@ -8,12 +8,14 @@ var levelID:int=0						# ID for the currently loaded level
 # The following are reference variables.
 var enemyReferences:Array[Enemy] = []	# Holds references to each currently instanced enemy
 var player:Node							# Holds the reference to the player
+var currentTarget:Node
 
 var playerScene: PackedScene = preload("res://scenes/player.tscn")
 var enemyScene: PackedScene = preload("res://scenes/enemy.tscn")
 
 func _ready() -> void:
 	instancePlayer()
+	player.keyPressed.connect(Callable(updateEnemyTargeting))
 	instanceEnemy()
 
 ## Instances the Player within the game.
@@ -29,7 +31,7 @@ func instancePlayer() -> void:
 ##
 ## @returns: A random word from a hardcoded list as a String.
 func getNextWord() -> String:
-	var wordlist="Katze,Hund,Haus,Apfel,Buch,Tisch,Wasser,Stadt,Fenster,Blume,Regen,Erde,Lächeln,Fahrrad,Mond".split(",")
+	var wordlist="Katze,Hund,Haus,Apfel,Buch,Tisch,Wasser,Stadt,Fenster,Blume,Regen,Erde,Lächeln,Fahrrad,Mond".to_lower().split(",") # Remove .to_lower() after testing TODO
 	var word=wordlist[randi_range(0,wordlist.size()-1)]
 	return word
 
@@ -44,3 +46,26 @@ func instanceEnemy() -> void:
 	nextEnemy.text = getNextWord()
 	enemyReferences+=[nextEnemy]
 	add_child(nextEnemy)
+
+## Handles picking enemies as well as enemy targeting decay.
+##
+## @returns: void
+func updateEnemyTargeting(event:InputEventKey) -> void:
+	if currentTarget==null: # No current target selected
+		var letter = OS.get_keycode_string(event.keycode).to_lower() # Remove once Input handler is implemented and event is replaced with letter
+		var target = getNearestTarget(letter)
+
+
+## Gets the nearest valid enemy target that matches the provided letter
+##
+## @returns: Enemy candidate that matches the provided letter and is the closest to the player.
+func getNearestTarget(letter:String) -> Enemy:
+	var shortestDistance:float = float("inf")
+	var currentCandidate:Enemy
+	for enemy in enemyReferences:
+		if enemy.text.substr(0,1)==letter:
+			var thisDistance=player.position.distance_to(enemy.position)
+			if thisDistance<shortestDistance:
+				currentCandidate=enemy
+				shortestDistance=thisDistance
+	return currentCandidate
