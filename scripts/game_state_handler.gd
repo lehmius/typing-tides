@@ -53,14 +53,16 @@ func instanceEnemy() -> void:
 func updateEnemyTargeting(event:InputEventKey) -> void:
 	if currentTarget==null: # No current target selected
 		var letter = OS.get_keycode_string(event.keycode).to_lower() # Remove once Input handler is implemented and event is replaced with letter
-		var target = getNearestTarget(letter)
+		currentTarget = getNearestTarget(letter)
+		setTarget(currentTarget)
+		
 
 
 ## Gets the nearest valid enemy target that matches the provided letter
 ##
 ## @returns: Enemy candidate that matches the provided letter and is the closest to the player.
 func getNearestTarget(letter:String) -> Enemy:
-	var shortestDistance:float = float("inf")
+	var shortestDistance:float = INF
 	var currentCandidate:Enemy
 	for enemy in enemyReferences:
 		if enemy.text.substr(0,1)==letter:
@@ -69,3 +71,17 @@ func getNearestTarget(letter:String) -> Enemy:
 				currentCandidate=enemy
 				shortestDistance=thisDistance
 	return currentCandidate
+
+## Sets the provided Enemy as the current target, colors it to communicate that information with the user.
+## Provide null to unset targets
+##
+## @returns: void
+func setTarget(target:Enemy) -> void:
+	var highlightColor = Color(1,0,0,1)
+	if not target==null:
+		currentTarget=target
+		target.get_node("Label").set("theme_override_colors/font_color",highlightColor)
+	else:
+		if currentTarget!=null:
+			currentTarget.get_node("Label").set("theme_override_colors/font_color",Color(1,1,1,1))
+		currentTarget=null
