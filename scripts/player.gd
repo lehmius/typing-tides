@@ -1,10 +1,10 @@
 extends CharacterBody2D
 
-signal shoot(projectile, pressedKey, global_position)
+signal shoot(Projectile, pressed_key, global_position)
 
 @export var speed:int = 300
 
-var Projectile = preload("res://scenes/projectile.tscn")
+#var Projectile = preload("res://scenes/projectile.tscn")
 
 func _ready() -> void:
 	pass
@@ -15,7 +15,13 @@ func _ready() -> void:
 ## @returns: void
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
-		shoot.emit(Projectile, event.keycode, global_position)
+		var keycode: int
+		keycode = event.keycode
+		if not event.shift_pressed:
+			keycode = keycode | 0x20
+		#shoot.emit(Projectile, String.chr(keycode), global_position)
+		print(OS.get_keycode_string(keycode))
+		
 
 
 func _process(delta: float) -> void:
