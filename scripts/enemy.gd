@@ -19,6 +19,7 @@ var bobAmplitude: float = 4.0			# Amplitude of the bobbing motion
 var direction: Vector2 = Vector2(0,0)# Vector from position to target, updated when any move function is called
 @onready var visualSprite:AnimatedSprite2D = $AnimatedSprite2D
 @onready var Player:Node			# Holds a reference to the Player.
+@onready var errorAnimationPlayer:AnimationPlayer = $AnimationPlayer
 var time:float = 0.0 				# Elapsed time since node was instantiated
 const maxBobbingSeverity:float = 2.0# Scales the bobbing motion to reach (at most) this value.
 
@@ -98,12 +99,5 @@ func attemptHit(letter:String) -> void:
 	if letter==text.substr(0,1):
 		takeDamage()
 	else:
-		errorShake($Label)
-
-## Shakes the referenced node from left to right for a very short time, indicating an invalid input. 
-## A strength can be specified to indicate how much the node should shake, as well as a length to decide for how long(in s).
-##
-## @returns: void
-func errorShake(node:Node,strength=5,length=0.1) -> void:
-	#TODO
-	pass
+		# If the attempted Hit is not correct, play an error shake, acting upon the Label.
+		errorAnimationPlayer.play("ErrorShake(Vertical)")

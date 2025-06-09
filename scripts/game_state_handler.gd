@@ -92,4 +92,5 @@ func setTarget(target:Enemy) -> void:
 func receiveKey(event:InputEventKey) -> void:
 	var letter = OS.get_keycode_string(event.keycode).to_lower() # Remove once Input handler is implemented and event is replaced with letter
 	updateEnemyTargeting(letter)
-	currentTarget.attemptHit(letter)
+	if currentTarget!=null:
+		currentTarget.attemptHit(letter)
