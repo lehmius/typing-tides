@@ -17,7 +17,7 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
 #		shoot.emit(Projectile, event.keycode, global_position)
-		keyPressed.emit(event) 			# A signal is used so that input handling is only done in one place, rather than several.
+		SignalBus.keyPressed.emit(event) # A signal is used so that input handling is only done in one place, rather than several.
 		pass
 
 

@@ -1,5 +1,6 @@
 ## This script is responsible for the core functionality of the gameplay loop.
 ## It keeps track of the gamestate, instances enemies and handles failure states.
+## This Node/Script should be autoloaded to allow access to it from all nodes, as it is needed in any level of the game.
 extends Node
 
 # Variables to change manually
@@ -15,7 +16,7 @@ var enemyScene: PackedScene = preload("res://scenes/enemy.tscn")
 
 func _ready() -> void:
 	instancePlayer()
-	player.keyPressed.connect(Callable(receiveKey))
+	SignalBus.connect("keyPressed",receiveKey)
 	instanceEnemiesDEBUG(5)
 
 ## Instances the Player within the game.
@@ -44,6 +45,7 @@ func instanceEnemy() -> void:
 	nextEnemy.position = Vector2(680,randi_range(15,345))
 	nextEnemy.Player = player
 	nextEnemy.text = getNextWord()
+	SignalBus.connect("onHit",enemyDeathHandler)
 	enemyReferences+=[nextEnemy]
 	add_child(nextEnemy)
 	
@@ -105,3 +107,10 @@ func receiveKey(event:InputEventKey) -> void:
 	updateEnemyTargeting(letter)
 	if currentTarget!=null:
 		currentTarget.attemptHit(letter)
+
+## Handler function for when an enemy died. Used to clear the reference out of the enemyReferences array.
+##
+## @ param deadEnemy: Enemy
+## @returns: void
+func enemyDeathHandler(deadEnemy:Enemy) -> void:
+	enemyReferences.erase(deadEnemy)

@@ -1,0 +1,7 @@
+## This script creates a Godot Signal Bus - allowing many nodes to send and receive signals without having to know each other.
+## Compared to a more traditional Signal implementation, this use of a bus should be both more stable and reduce overhead.
+## The Node this Script is attached to (SignalBus) has to be Autoloaded within the project to be accessible by all Nodes.
+extends Node
+
+signal onHit # Expects a reference to the Enemy that has been hit.
+signal keyPressed # Expects a event of the pressed Key.

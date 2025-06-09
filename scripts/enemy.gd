@@ -23,6 +23,8 @@ var direction: Vector2 = Vector2(0,0)# Vector from position to target, updated w
 var time:float = 0.0 				# Elapsed time since node was instantiated
 const maxBobbingSeverity:float = 2.0# Scales the bobbing motion to reach (at most) this value.
 
+signal enemyDied(enemyInstance:Enemy)
+
 func _ready() -> void:
 	updateState()
 	setBobbingDynamics()
@@ -87,9 +89,11 @@ func takeDamage() -> void:
 	updateState()
 
 ## Handler method for if the enemy runs out of letters, simulating a "death".
+## Emits a onHit Signal to notify game_state_handler about the death of the enemy.
 ##
 ## @returns: void
 func death() -> void:
+	SignalBus.onHit.emit(self)
 	queue_free()
 
 ## Attempts to simulate a hit by the player to the enemy. If successfull, results in damage.
