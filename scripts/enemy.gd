@@ -36,6 +36,7 @@ func _physics_process(delta: float) -> void:
 ##
 ## @param custom_target: The target the enemy should move towards
 ##
+## @param custom_target: Vector 2 - The target that the enemy should move to.
 ## @returns: void
 func moveEnemyTo(custom_target:Vector2) -> void:
 	if position.distance_to(custom_target) > 5: # Only move if enemy is not already on top of target 
@@ -94,6 +95,7 @@ func death() -> void:
 ## Attempts to simulate a hit by the player to the enemy. If successfull, results in damage.
 ## If not, it shakes the enemy to indicate so.
 ##
+## @param letter: String - Letter that is trying to simualte a hit.
 ## @returns: void
 func attemptHit(letter:String) -> void:
 	if letter==text.substr(0,1):

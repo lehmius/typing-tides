@@ -49,7 +49,7 @@ func instanceEnemy() -> void:
 	
 ## Instances a provided amount of Enemies, to use in debugging and testing.  
 ##
-## @param int
+## @param amount: int - The amount of enemies to spawn.
 ## @returns: void
 func instanceEnemiesDEBUG(amount:int) -> void:
 	for i in range(amount):
@@ -57,16 +57,17 @@ func instanceEnemiesDEBUG(amount:int) -> void:
 
 ## Handles picking enemies as well as enemy targeting decay.
 ##
+## @param letter: String - Letter that is trying to change the targeting
 ## @returns: void
 func updateEnemyTargeting(letter:String) -> void:
 	if currentTarget==null: # No current target selected
 		currentTarget = getNearestTarget(letter)
 		setTarget(currentTarget)
-		
 
 
-## Gets the nearest valid enemy target that matches the provided letter
+## Gets the nearest valid enemy target that matches the provided letter.
 ##
+## @param letter: String - Letter that is defining the target.
 ## @returns: Enemy candidate that matches the provided letter and is the closest to the player.
 func getNearestTarget(letter:String) -> Enemy:
 	var shortestDistance:float = INF
@@ -82,6 +83,7 @@ func getNearestTarget(letter:String) -> Enemy:
 ## Sets the provided Enemy as the current target, colors it to communicate that information with the user.
 ## Provide null to unset target.
 ##
+## @param target: Enemy - Enemy reference that should be targeted.
 ## @returns: void
 func setTarget(target:Enemy) -> void:
 	var highlightColor = Color(1,0,0,1)
@@ -96,6 +98,7 @@ func setTarget(target:Enemy) -> void:
 ## Handler function for inputEvents (after being processed by the input handler in the Player scene). 
 ## Delegates the event to required other functions.
 ##
+## @param event: InputEventKey - Button was pressed in an InputEvent.
 ## @returns: void
 func receiveKey(event:InputEventKey) -> void:
 	var letter = OS.get_keycode_string(event.keycode).to_lower() # Remove once Input handler is implemented and event is replaced with letter
