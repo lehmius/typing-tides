@@ -16,7 +16,7 @@ var enemyScene: PackedScene = preload("res://scenes/enemy.tscn")
 func _ready() -> void:
 	instancePlayer()
 	player.keyPressed.connect(Callable(receiveKey))
-	instanceEnemy()
+	instanceEnemiesDEBUG(5)
 
 ## Instances the Player within the game.
 ##
@@ -46,6 +46,14 @@ func instanceEnemy() -> void:
 	nextEnemy.text = getNextWord()
 	enemyReferences+=[nextEnemy]
 	add_child(nextEnemy)
+	
+## Instances a provided amount of Enemies, to use in debugging and testing.  
+##
+## @param int
+## @returns: void
+func instanceEnemiesDEBUG(amount:int) -> void:
+	for i in range(amount):
+		instanceEnemy()
 
 ## Handles picking enemies as well as enemy targeting decay.
 ##
@@ -72,7 +80,7 @@ func getNearestTarget(letter:String) -> Enemy:
 	return currentCandidate
 
 ## Sets the provided Enemy as the current target, colors it to communicate that information with the user.
-## Provide null to unset targets
+## Provide null to unset target.
 ##
 ## @returns: void
 func setTarget(target:Enemy) -> void:
