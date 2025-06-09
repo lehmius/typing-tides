@@ -89,3 +89,21 @@ func takeDamage() -> void:
 ## @returns: void
 func death() -> void:
 	queue_free()
+
+## Attempts to simulate a hit by the player to the enemy. If successfull, results in damage.
+## If not, it shakes the enemy to indicate so.
+##
+## @returns: void
+func attemptHit(letter:String) -> void:
+	if letter==text.substr(0,1):
+		takeDamage()
+	else:
+		errorShake($Label)
+
+## Shakes the referenced node from left to right for a very short time, indicating an invalid input. 
+## A strength can be specified to indicate how much the node should shake, as well as a length to decide for how long(in s).
+##
+## @returns: void
+func errorShake(node:Node,strength=5,length=0.1) -> void:
+	#TODO
+	pass

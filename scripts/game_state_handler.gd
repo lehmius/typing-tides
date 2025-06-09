@@ -15,7 +15,7 @@ var enemyScene: PackedScene = preload("res://scenes/enemy.tscn")
 
 func _ready() -> void:
 	instancePlayer()
-	player.keyPressed.connect(Callable(updateEnemyTargeting))
+	player.keyPressed.connect(Callable(receiveKey))
 	instanceEnemy()
 
 ## Instances the Player within the game.
@@ -50,9 +50,8 @@ func instanceEnemy() -> void:
 ## Handles picking enemies as well as enemy targeting decay.
 ##
 ## @returns: void
-func updateEnemyTargeting(event:InputEventKey) -> void:
+func updateEnemyTargeting(letter:String) -> void:
 	if currentTarget==null: # No current target selected
-		var letter = OS.get_keycode_string(event.keycode).to_lower() # Remove once Input handler is implemented and event is replaced with letter
 		currentTarget = getNearestTarget(letter)
 		setTarget(currentTarget)
 		
@@ -85,3 +84,12 @@ func setTarget(target:Enemy) -> void:
 		if currentTarget!=null:
 			currentTarget.get_node("Label").set("theme_override_colors/font_color",Color(1,1,1,1))
 		currentTarget=null
+
+## Handler function for inputEvents (after being processed by the input handler in the Player scene). 
+## Delegates the event to required other functions.
+##
+## @returns: void
+func receiveKey(event:InputEventKey) -> void:
+	var letter = OS.get_keycode_string(event.keycode).to_lower() # Remove once Input handler is implemented and event is replaced with letter
+	updateEnemyTargeting(letter)
+	currentTarget.attemptHit(letter)
