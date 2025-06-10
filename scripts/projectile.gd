@@ -21,9 +21,9 @@ func _on_screen_existed() -> void:
 ## @param radians: The new rotation in radians
 ##
 ## @returns: void
-func rotate_using_radians(radians: float) -> void:
-	rotation += radians
-	velocity = velocity.rotated(radians)
+func rotate_using_radians(radius: float) -> void:
+	rotation += radius
+	velocity = velocity.rotated(radius)
 	print(velocity)
 
 ## Changes the rotation of the projectile using degrees. 
