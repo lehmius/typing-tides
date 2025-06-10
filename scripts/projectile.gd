@@ -43,3 +43,27 @@ func rotate_using_degrees(degree: float) -> void:
 func reset_rotation() -> void:
 	velocity = velocity.rotated(-rotation)
 	rotation = 0
+
+## Adds a pixel per second value to the current velocity.
+## New velocity is calculated with neutral rotation and then rotated.
+##
+## @param velocity_increase
+func add_velocity(velocity_increase: float) -> void:
+	var temp = velocity.rotated(-rotation)[0]
+	temp += velocity_increase
+	velocity = Vector2(temp, 0).rotated(rotation)
+
+## Sets the velocity to a pixels per second value. 
+## Current rotation of the projectile is considered for travel direction.
+##
+## @param new_velocity: The new velocity. Positive number represents left to right movement.
+##
+## @returns: void
+func set_velocity(_velocity: float) -> void:
+	velocity = Vector2(_velocity, 0).rotated(get_rotation())
+
+## Returns the current velocity in pixels per second.
+## 
+## @returns: float
+func get_velocity() -> float:
+	return velocity.rotated(-rotation)[0]
