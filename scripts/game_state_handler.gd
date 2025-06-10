@@ -3,8 +3,12 @@
 ## This Node/Script should be autoloaded to allow access to it from all nodes, as it is needed in any level of the game.
 extends Node
 
-# Variables to change manually
+# Constants
+const maxConsecutiveErrors:int = 2		# Maximum of consecutive Errors, allowed to be made before changing targeting.
+
+# Variables
 var levelID:int=0						# ID for the currently loaded level
+var consecutiveErrors:int=0				# Amount of consecutive wrong inputs, used for targeting decay
 
 # The following are reference variables.
 var enemyReferences:Array[Enemy] = []	# Holds references to each currently instanced enemy
@@ -65,6 +69,13 @@ func updateEnemyTargeting(letter:String) -> void:
 	if currentTarget==null: # No current target selected
 		currentTarget = getNearestTarget(letter)
 		setTarget(currentTarget)
+	else:
+		if letter!=currentTarget.text.substr(0,1):
+			consecutiveErrors+=1
+			if consecutiveErrors>maxConsecutiveErrors:
+				var newTarget = getNearestTarget(letter)
+				setTarget(newTarget)
+				consecutiveErrors=0
 
 
 ## Gets the nearest valid enemy target that matches the provided letter.
@@ -89,12 +100,13 @@ func getNearestTarget(letter:String) -> Enemy:
 ## @returns: void
 func setTarget(target:Enemy) -> void:
 	var highlightColor = Color(1,0,0,1)
+	# Reset previous target color before changing or resetting target.
+	if currentTarget!=null:
+			currentTarget.get_node("Label").set("theme_override_colors/font_color",Color(1,1,1,1))
 	if not target==null:
 		currentTarget=target
 		target.get_node("Label").set("theme_override_colors/font_color",highlightColor)
 	else:
-		if currentTarget!=null:
-			currentTarget.get_node("Label").set("theme_override_colors/font_color",Color(1,1,1,1))
 		currentTarget=null
 
 ## Handler function for inputEvents (after being processed by the input handler in the Player scene). 
