@@ -49,9 +49,7 @@ func reset_rotation() -> void:
 ##
 ## @param velocity_increase
 func add_velocity(velocity_increase: float) -> void:
-	var temp = velocity.rotated(-rotation)[0]
-	temp += velocity_increase
-	velocity = Vector2(temp, 0).rotated(rotation)
+	velocity += Vector2(velocity_increase, 0).rotated(rotation)
 
 ## Sets the velocity to a pixels per second value. 
 ## Current rotation of the projectile is considered for travel direction.
