@@ -74,6 +74,7 @@ offset_right = 28.235
 offset_bottom = 38.0
 grow_horizontal = 2
 size_flags_horizontal = 3
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 text = "default"
 horizontal_alignment = 1
 

@@ -61,14 +61,15 @@ func instanceEnemiesDEBUG(amount:int) -> void:
 	for i in range(amount):
 		instanceEnemy()
 
-## Handles picking enemies as well as enemy targeting decay.
+## Handles picking enemies. If no enemy is chosen, tries to assign a new one.
+## If the amount of errors is higher than maxConsecutiveErrors an attempt is made to switch targets too.
 ##
 ## @param letter: String - Letter that is trying to change the targeting
 ## @returns: void
 func updateEnemyTargeting(letter:String) -> void:
 	if currentTarget==null: # No current target selected
 		currentTarget = getNearestTarget(letter)
-		setTarget(currentTarget)
+		if currentTarget!=null:	setTarget(currentTarget)
 	else:
 		if letter!=currentTarget.text.substr(0,1):
 			consecutiveErrors+=1
@@ -100,11 +101,12 @@ func getNearestTarget(letter:String) -> Enemy:
 ## @returns: void
 func setTarget(target:Enemy) -> void:
 	var highlightColor = Color(1,0,0,1)
-	# Reset previous target color before changing or resetting target.
-	if currentTarget!=null:
+	if (currentTarget!=null) or (target==null):
 			currentTarget.get_node("Label").set("theme_override_colors/font_color",Color(1,1,1,1))
-	if not target==null:
+			currentTarget.set("z_index",0)
+	if target!=null:
 		currentTarget=target
+		target.set("z_index",500)
 		target.get_node("Label").set("theme_override_colors/font_color",highlightColor)
 	else:
 		currentTarget=null
