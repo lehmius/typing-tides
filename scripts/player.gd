@@ -18,9 +18,30 @@ func _input(event: InputEvent) -> void:
 		var keycode: int
 		keycode = event.keycode
 		if not event.shift_pressed:
-			keycode = keycode | 0x20
-		#shoot.emit(Projectile, String.chr(keycode), global_position)
-		print(OS.get_keycode_string(keycode))
+			match keycode:
+				59:
+					keycode = "ü".unicode_at(0)
+				96:
+					keycode = "ö".unicode_at(0)
+				39:
+					keycode = "ä".unicode_at(0)
+				91:
+					keycode = "ß".unicode_at(0)
+				_:
+					keycode = keycode | 0x20
+		else:
+			match keycode:
+				59:
+					keycode = "Ü".unicode_at(0)
+				96:
+					keycode = "Ö".unicode_at(0)
+				39:
+					keycode = "Ä".unicode_at(0)
+				_:
+					pass
+		if keycode > 20 and keycode < 40000:
+			#shoot.emit(Projectile, String.chr(keycode), global_position)
+			print(String.chr(keycode),": ",  keycode)
 		
 
 
