@@ -112,12 +112,11 @@ func setTarget(target:Enemy) -> void:
 		currentTarget=null
 
 ## Handler function for inputEvents (after being processed by the input handler in the Player scene). 
-## Delegates the event to required other functions.
+## Delegates the letter of the event to required other functions.
 ##
-## @param event: InputEventKey - Button was pressed in an InputEvent.
+## @param letter: String - Button was pressed in an InputEvent.
 ## @returns: void
-func receiveKey(event:InputEventKey) -> void:
-	var letter = OS.get_keycode_string(event.keycode).to_lower() # Remove once Input handler is implemented and event is replaced with letter
+func receiveKey(letter:String) -> void:
 	updateEnemyTargeting(letter)
 	if currentTarget!=null:
 		currentTarget.attemptHit(letter)
