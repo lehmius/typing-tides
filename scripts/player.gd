@@ -4,7 +4,7 @@ signal shoot(Projectile, pressed_key, global_position)
 
 @export var speed:int = 300
 
-#var Projectile = preload("res://scenes/projectile.tscn")
+var Projectile = preload("res://scenes/projectile.tscn")
 
 func _ready() -> void:
 	pass
@@ -40,7 +40,7 @@ func _input(event: InputEvent) -> void:
 				_:
 					pass
 		if keycode > 20 and keycode < 40000:
-			#shoot.emit(Projectile, String.chr(keycode), global_position)
+			shoot.emit(Projectile, String.chr(keycode), global_position)
 			print(String.chr(keycode),": ",  keycode)
 		
 
