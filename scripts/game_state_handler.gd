@@ -27,6 +27,8 @@ var currentTarget:Node
 var playerScene: PackedScene = preload("res://scenes/player.tscn")
 var enemyScene: PackedScene = preload("res://scenes/enemy.tscn")
 
+enum inputType{VALID,INVALID}
+
 func _ready() -> void:
 	instancePlayer()
 	SignalBus.connect("keyPressed",receiveKey)
@@ -128,11 +130,18 @@ func setTarget(target:Enemy) -> void:
 func receiveKey(letter:String) -> void:
 	updateEnemyTargeting(letter)
 	if currentTarget!=null:
+		if currentTarget.text.substr(0,1)==letter:
+			updatePerformanceMetrics(inputType.VALID)
+		else:
+			updatePerformanceMetrics(inputType.INVALID)
 		currentTarget.attemptHit(letter)
+	else: # Gets reached when the player tried to target something but no valid target was found.
+		updatePerformanceMetrics(inputType.INVALID)
+	# displayPerformanceMetricsDEBUG()
 
 ## Handler function for when an enemy died. Used to clear the reference out of the enemyReferences array.
 ##
-## @ param deadEnemy: Enemy
+## @param deadEnemy: Enemy
 ## @returns: void
 func enemyDeathHandler(deadEnemy:Enemy) -> void:
 	enemyReferences.erase(deadEnemy)
@@ -148,6 +157,19 @@ func resetPerformanceMetrics() -> void:
 
 ## Keep track of the performance metric variables.
 ##
+## @param input: inputType - specify if the input made is a valid or invalid input.
 ## @returns: void
-func updatePerformanceMetrics() -> void:
-	pass
+func updatePerformanceMetrics(input:inputType) -> void:
+	totalLettersTyped+=1
+	if input==inputType.VALID:
+		highestConsecutiveStreak+=1
+	elif input==inputType.INVALID:
+		totalMistakesMade+=1
+		currentConsecutiveStreak=0
+
+func displayPerformanceMetricsDEBUG() -> void:
+	print("===Performance metrics:===")
+	print("Total letters typed: ",totalLettersTyped)
+	print("Total mistakes made: ",totalMistakesMade)
+	print("Current consecutive streak: ",currentConsecutiveStreak)
+	print("Highest consecutive streak: ",highestConsecutiveStreak)
