@@ -9,6 +9,15 @@ const maxConsecutiveErrors:int = 2		# Maximum of consecutive Errors, allowed to 
 # Variables
 var levelID:int=0						# ID for the currently loaded level
 var consecutiveErrors:int=0				# Amount of consecutive wrong inputs, used for targeting decay
+# Player performance metrics
+var totalLettersTyped:int=0				# The total amount of letters typed
+var totalMistakesMade:int=0				# The total amount of invalid letters typed
+var highestConsecutiveStreak:int=0		# The highest consecutive amount of valid letters typed
+var currentConsecutiveStreak:int=0		# The current amount of consecutive valid letters typed
+#var comboMeter:float=0.0				# The curent comboMeter, influencing how score gets measured (Currently not implemented)
+var score:int=0							# The total score for the level
+
+
 
 # The following are reference variables.
 var enemyReferences:Array[Enemy] = []	# Holds references to each currently instanced enemy
@@ -127,3 +136,18 @@ func receiveKey(letter:String) -> void:
 ## @returns: void
 func enemyDeathHandler(deadEnemy:Enemy) -> void:
 	enemyReferences.erase(deadEnemy)
+
+## Resets all perfomance metrics to their initialization values.
+##
+## @returns:void
+func resetPerformanceMetrics() -> void:
+	totalLettersTyped=0
+	totalMistakesMade=0
+	highestConsecutiveStreak=0
+	currentConsecutiveStreak=0
+
+## Keep track of the performance metric variables.
+##
+## @returns: void
+func updatePerformanceMetrics() -> void:
+	pass
