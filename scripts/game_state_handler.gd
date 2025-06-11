@@ -15,6 +15,7 @@ var totalMistakesMade:int=0				# The total amount of invalid letters typed
 var highestConsecutiveStreak:int=0		# The highest consecutive amount of valid letters typed
 var currentConsecutiveStreak:int=0		# The current amount of consecutive valid letters typed
 #var comboMeter:float=0.0				# The curent comboMeter, influencing how score gets measured (Currently not implemented)
+var wordsTyped:int=0					# How many words (=enemies) have been typed
 var score:int=0							# The total score for the level
 
 
@@ -145,6 +146,7 @@ func receiveKey(letter:String) -> void:
 ## @returns: void
 func enemyDeathHandler(deadEnemy:Enemy) -> void:
 	enemyReferences.erase(deadEnemy)
+	wordsTyped+=1
 
 ## Resets all perfomance metrics to their initialization values.
 ##
@@ -154,6 +156,7 @@ func resetPerformanceMetrics() -> void:
 	totalMistakesMade=0
 	highestConsecutiveStreak=0
 	currentConsecutiveStreak=0
+	wordsTyped=0
 
 ## Keep track of the performance metric variables.
 ##
