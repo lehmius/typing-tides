@@ -46,12 +46,12 @@ func instancePlayer() -> void:
 ## Until a database is available, this function is a placeholder to generate basic words for testing. 
 ##
 ## @returns: A random word from a hardcoded list as a String.
-func getNextWord() -> String:
+func getNextWordDEBUG() -> String:
 	var wordlist="Katze,Hund,Haus,Apfel,Buch,Tisch,Wasser,Stadt,Fenster,Blume,Regen,Erde,Lächeln,Fahrrad,Mond".to_lower().split(",") # Remove .to_lower() after testing TODO
 	var word=wordlist[randi_range(0,wordlist.size()-1)]
 	return word
 
-## Instances an enemy scene with a word from the getNextWord function, 
+## Instances an enemy scene with a word from the getNextWordDEBUG function, 
 ## positions it at a random position just outside the screen and populates variables accordingly.
 ##
 ## @returns: void
@@ -59,7 +59,7 @@ func instanceEnemy() -> void:
 	var nextEnemy = enemyScene.instantiate() 
 	nextEnemy.position = Vector2(680,randi_range(15,345))
 	nextEnemy.Player = player
-	nextEnemy.text = getNextWord()
+	nextEnemy.text = getNextWordDEBUG()
 	SignalBus.connect("onHit",enemyDeathHandler)
 	enemyReferences+=[nextEnemy]
 	add_child(nextEnemy)
