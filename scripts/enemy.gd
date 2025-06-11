@@ -7,6 +7,8 @@
 
 extends CharacterBody2D
 
+class_name Enemy
+
 @export var text:String = "default" #: Value of the word associated with the enemy
 @export var speed:int = 500 		#: Enemy speed in pixels/second
 
@@ -16,9 +18,12 @@ var bobFrequency: float = 2.0		# Frequency of the bobbing motion
 var bobAmplitude: float = 4.0			# Amplitude of the bobbing motion
 var direction: Vector2 = Vector2(0,0)# Vector from position to target, updated when any move function is called
 @onready var visualSprite:AnimatedSprite2D = $AnimatedSprite2D
-@onready var Player:Node			# TODO: Get Player node when Player scene is done
+@onready var Player:Node			# Holds a reference to the Player.
+@onready var errorAnimationPlayer:AnimationPlayer = $AnimationPlayer
 var time:float = 0.0 				# Elapsed time since node was instantiated
 const maxBobbingSeverity:float = 2.0# Scales the bobbing motion to reach (at most) this value.
+
+signal enemyDied(enemyInstance:Enemy)
 
 func _ready() -> void:
 	updateState()
@@ -33,6 +38,7 @@ func _physics_process(delta: float) -> void:
 ##
 ## @param custom_target: The target the enemy should move towards
 ##
+## @param custom_target: Vector 2 - The target that the enemy should move to.
 ## @returns: void
 func moveEnemyTo(custom_target:Vector2) -> void:
 	if position.distance_to(custom_target) > 5: # Only move if enemy is not already on top of target 
@@ -83,7 +89,21 @@ func takeDamage() -> void:
 	updateState()
 
 ## Handler method for if the enemy runs out of letters, simulating a "death".
+## Emits a onHit Signal to notify game_state_handler about the death of the enemy.
 ##
 ## @returns: void
 func death() -> void:
+	SignalBus.onHit.emit(self)
 	queue_free()
+
+## Attempts to simulate a hit by the player to the enemy. If successfull, results in damage.
+## If not, it shakes the enemy to indicate so.
+##
+## @param letter: String - Letter that is trying to simualte a hit.
+## @returns: void
+func attemptHit(letter:String) -> void:
+	if letter==text.substr(0,1):
+		takeDamage()
+	else:
+		# If the attempted Hit is not correct, play an error shake, acting upon the Label.
+		errorAnimationPlayer.play("ErrorShake(Vertical)")
