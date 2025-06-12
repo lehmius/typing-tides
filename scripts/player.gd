@@ -43,7 +43,7 @@ func _input(event: InputEvent) -> void:
 		if keycode > 20 and keycode < 40000:
 			shoot.emit(Projectile, String.chr(keycode), global_position)
 			SignalBus.keyPressed.emit(String.chr(keycode))
-			print(String.chr(keycode),": ",  keycode)
+			#print(String.chr(keycode),": ",  keycode)
 
 
 

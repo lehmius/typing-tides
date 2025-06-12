@@ -138,13 +138,15 @@ func receiveKey(letter:String) -> void:
 		currentTarget.attemptHit(letter)
 	else: # Gets reached when the player tried to target something but no valid target was found.
 		updatePerformanceMetrics(inputType.INVALID)
-	# displayPerformanceMetricsDEBUG()
+	#displayPerformanceMetricsDEBUG()
 
 ## Handler function for when an enemy died. Used to clear the reference out of the enemyReferences array.
 ##
-## @param deadEnemy: Enemy
+## @param deadEnemy: Enemy - The enemy that has died
+## @param score: Float - The score associated to that enemy
 ## @returns: void
-func enemyDeathHandler(deadEnemy:Enemy) -> void:
+func enemyDeathHandler(deadEnemy:Enemy,difficultyScore:float) -> void:
+	score+=currentConsecutiveStreak*difficultyScore
 	enemyReferences.erase(deadEnemy)
 	wordsTyped+=1
 
@@ -165,7 +167,9 @@ func resetPerformanceMetrics() -> void:
 func updatePerformanceMetrics(input:inputType) -> void:
 	totalLettersTyped+=1
 	if input==inputType.VALID:
-		highestConsecutiveStreak+=1
+		currentConsecutiveStreak+=1
+		if currentConsecutiveStreak>highestConsecutiveStreak:
+			highestConsecutiveStreak=currentConsecutiveStreak
 	elif input==inputType.INVALID:
 		totalMistakesMade+=1
 		currentConsecutiveStreak=0

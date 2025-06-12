@@ -22,8 +22,8 @@ var direction: Vector2 = Vector2(0,0)# Vector from position to target, updated w
 @onready var errorAnimationPlayer:AnimationPlayer = $AnimationPlayer
 var time:float = 0.0 				# Elapsed time since node was instantiated
 const maxBobbingSeverity:float = 2.0# Scales the bobbing motion to reach (at most) this value.
-
-signal enemyDied(enemyInstance:Enemy)
+var score:float = 1.0						# Difficulty vector the enemy has assigned to it, TODO this should be overwritten when instancing the enemy 
+signal enemyDied(enemyInstance:Enemy,score:float)
 
 func _ready() -> void:
 	updateState()
@@ -93,7 +93,7 @@ func takeDamage() -> void:
 ##
 ## @returns: void
 func death() -> void:
-	SignalBus.onHit.emit(self)
+	SignalBus.onHit.emit(self,score)
 	queue_free()
 
 ## Attempts to simulate a hit by the player to the enemy. If successfull, results in damage.
