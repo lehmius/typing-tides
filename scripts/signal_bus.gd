@@ -5,3 +5,4 @@ extends Node
 
 signal onHit # Expects a reference to the Enemy that has been hit.
 signal keyPressed # Expects a event of the pressed Key.
+signal gameOver # Game Over signal if Player is hit

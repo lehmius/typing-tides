@@ -36,6 +36,7 @@ enum inputType{VALID,INVALID}
 func _ready() -> void:
 	instancePlayer()
 	SignalBus.connect("keyPressed",receiveKey)
+	SignalBus.connect("gameOver",gameOverTriggered)
 	instanceEnemiesDEBUG(5)
 
 func _physics_process(delta: float) -> void:
@@ -214,3 +215,10 @@ func getTotalAccuracy() -> float:
 func getCharactersPerMinute() -> float:
 	if not time==0: return totalLettersTyped/(time/60)
 	else: return -1
+
+## Helper function to trigger when the level is over as the player has been hit. 
+## TODO: Implement endscreen and switch to main menu
+##
+## @returns: void
+func gameOverTriggered() -> void:
+	print("GAME OVER")

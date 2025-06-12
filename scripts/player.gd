@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Node2D
 
 signal keyPressed(key:InputEventKey)		# A signal that allows for the result of the input handling (conversion to String) to be accessed by all nodes in the project.
 signal shoot(Projectile, pressed_key, global_position)
@@ -8,6 +8,7 @@ signal shoot(Projectile, pressed_key, global_position)
 #var Projectile = preload("res://scenes/projectile.tscn")
 
 func _ready() -> void:
+	$Area2D.connect("body_entered",sendGameOver)
 	pass
 
 ## Emits the shoot(projectile, pressedKey, global_position) signal on InputEventKey.pressed event.
@@ -54,3 +55,7 @@ func _physics_process(delta: float) -> void:
 	pass
 	#velocity.x = speed
 	#move_and_slide()
+
+
+func sendGameOver(body:Node2D) -> void:
+	SignalBus.emit_signal("gameOver")
