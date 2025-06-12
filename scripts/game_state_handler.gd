@@ -19,6 +19,8 @@ var wordsTyped:int=0					# How many words (=enemies) have been typed
 var score:int=0							# The total score for the level
 var wordMistakes:int=0					# Tracking per word mistakes
 var wordCorrectLetters:int=0			# Tracking per word correct letters
+var time:float=0.0						# Time since starting the level
+var isPaused:bool=false					# Tracks if the game is paused right now
 
 
 # The following are reference variables.
@@ -35,6 +37,10 @@ func _ready() -> void:
 	instancePlayer()
 	SignalBus.connect("keyPressed",receiveKey)
 	instanceEnemiesDEBUG(5)
+
+func _physics_process(delta: float) -> void:
+	if not isPaused:
+		time+=delta
 
 ## Instances the Player within the game.
 ##
@@ -200,4 +206,11 @@ func getWordAccuracy() -> float:
 ## @returns: float - The total accuracy
 func getTotalAccuracy() -> float:
 	if not totalLettersTyped==0: return (totalLettersTyped-totalMistakesMade)/totalLettersTyped
-	else: return 0.0
+	else: return -1
+
+## Calculate the characters per minute typed
+##
+## @returns: float - Characters per minute (including wrong ones)
+func getCharactersPerMinute() -> float:
+	if not time==0: return totalLettersTyped/(time/60)
+	else: return -1
