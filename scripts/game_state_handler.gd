@@ -17,7 +17,8 @@ var currentConsecutiveStreak:int=0		# The current amount of consecutive valid le
 #var comboMeter:float=0.0				# The curent comboMeter, influencing how score gets measured (Currently not implemented)
 var wordsTyped:int=0					# How many words (=enemies) have been typed
 var score:int=0							# The total score for the level
-
+var wordMistakes:int=0					# Tracking per word mistakes
+var wordCorrectLetters:int=0			# Tracking per word correct letters
 
 
 # The following are reference variables.
@@ -148,6 +149,8 @@ func receiveKey(letter:String) -> void:
 func enemyDeathHandler(deadEnemy:Enemy,difficultyScore:float) -> void:
 	score+=currentConsecutiveStreak*difficultyScore
 	enemyReferences.erase(deadEnemy)
+	wordCorrectLetters=0
+	wordMistakes=0
 	wordsTyped+=1
 
 ## Resets all perfomance metrics to their initialization values.
@@ -167,16 +170,34 @@ func resetPerformanceMetrics() -> void:
 func updatePerformanceMetrics(input:inputType) -> void:
 	totalLettersTyped+=1
 	if input==inputType.VALID:
+		wordCorrectLetters+=1
 		currentConsecutiveStreak+=1
 		if currentConsecutiveStreak>highestConsecutiveStreak:
 			highestConsecutiveStreak=currentConsecutiveStreak
 	elif input==inputType.INVALID:
+		wordMistakes+=1
 		totalMistakesMade+=1
 		currentConsecutiveStreak=0
 
+## Function to display the performance metrics for debugging 
+##
+## @returns: void
 func displayPerformanceMetricsDEBUG() -> void:
 	print("===Performance metrics:===")
 	print("Total letters typed: ",totalLettersTyped)
 	print("Total mistakes made: ",totalMistakesMade)
 	print("Current consecutive streak: ",currentConsecutiveStreak)
 	print("Highest consecutive streak: ",highestConsecutiveStreak)
+
+## Calculate the accuracy of this word
+##
+## @returns: float - The accuracy of the word as a value between 0 and 1
+func getWordAccuracy() -> float:
+	return wordCorrectLetters/(wordCorrectLetters+wordMistakes)
+
+## Calculate total accuracy of the player in the level
+##
+## @returns: float - The total accuracy
+func getTotalAccuracy() -> float:
+	if not totalLettersTyped==0: return (totalLettersTyped-totalMistakesMade)/totalLettersTyped
+	else: return 0.0
