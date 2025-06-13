@@ -12,7 +12,6 @@ class_name Enemy
 @export var text:String = "default" #: Value of the word associated with the enemy
 @export var speed:int = 500 		#: Enemy speed in pixels/second
 
-var isPaused:bool = false 			# Flag to pause all movement
 var target:Vector2 = Vector2(0,0) 	# Target the enemy is moving towards.
 var bobFrequency: float = 2.0		# Frequency of the bobbing motion
 var bobAmplitude: float = 4.0			# Amplitude of the bobbing motion
@@ -30,7 +29,7 @@ func _ready() -> void:
 	setBobbingDynamics()
 
 func _physics_process(delta: float) -> void:
-	if not isPaused:
+	if not GlobalState.isPaused:
 		time+=delta
 		moveEnemyToPlayer()
 
@@ -41,11 +40,12 @@ func _physics_process(delta: float) -> void:
 ## @param custom_target: Vector 2 - The target that the enemy should move to.
 ## @returns: void
 func moveEnemyTo(custom_target:Vector2) -> void:
-	if position.distance_to(custom_target) > 5: # Only move if enemy is not already on top of target 
-		direction = (custom_target - position).normalized()
-		velocity = direction * speed
-		move_and_slide() # Automatically handles frame rate independent movement
-	addBobbing()
+	if not GlobalState.isPaused:
+		if position.distance_to(custom_target) > 5: # Only move if enemy is not already on top of target 
+			direction = (custom_target - position).normalized()
+			velocity = direction * speed
+			move_and_slide() # Automatically handles frame rate independent movement
+		addBobbing()
 
 ## Moves the enemy across the scene to the player in a linear path.
 ##

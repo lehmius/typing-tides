@@ -137,16 +137,17 @@ func setTarget(target:Enemy) -> void:
 ## @param letter: String - Button was pressed in an InputEvent.
 ## @returns: void
 func receiveKey(letter:String) -> void:
-	updateEnemyTargeting(letter)
-	if currentTarget!=null:
-		if currentTarget.text.substr(0,1)==letter:
-			updatePerformanceMetrics(inputType.VALID)
-		else:
+	if not GlobalState.isPaused:
+		updateEnemyTargeting(letter)
+		if currentTarget!=null:
+			if currentTarget.text.substr(0,1)==letter:
+				updatePerformanceMetrics(inputType.VALID)
+			else:
+				updatePerformanceMetrics(inputType.INVALID)
+			currentTarget.attemptHit(letter)
+		else: # Gets reached when the player tried to target something but no valid target was found.
 			updatePerformanceMetrics(inputType.INVALID)
-		currentTarget.attemptHit(letter)
-	else: # Gets reached when the player tried to target something but no valid target was found.
-		updatePerformanceMetrics(inputType.INVALID)
-	#displayPerformanceMetricsDEBUG()
+		#displayPerformanceMetricsDEBUG()
 
 ## Handler function for when an enemy died. Used to clear the reference out of the enemyReferences array.
 ##
