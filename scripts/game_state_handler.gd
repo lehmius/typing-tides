@@ -37,7 +37,7 @@ func _ready() -> void:
 	instancePlayer()
 	SignalBus.connect("keyPressed",receiveKey)
 	SignalBus.connect("gameOver",gameOverTriggered)
-	instanceEnemiesDEBUG(5)
+	#instanceEnemiesDEBUG(5)
 
 func _physics_process(delta: float) -> void:
 	if not isPaused:
@@ -223,3 +223,11 @@ func getCharactersPerMinute() -> float:
 ## @returns: void
 func gameOverTriggered() -> void:
 	print("GAME OVER")
+
+
+## Loads the appropriate data for a level given the levelID
+##
+## @returns: void
+func loadLevel(levelID:int) -> void:
+	pass
+	
