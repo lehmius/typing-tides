@@ -5,7 +5,7 @@ var data;
 
 func _ready() -> void:
 	rawdata = loadDatabaseData()
-	#print(getLevelWords(-1))
+	SignalBus.levelData.emit(getLevelWords(-1))
 	
 ## Load the appropriate data from the database for the level provided.
 ##
@@ -61,7 +61,6 @@ func getLevelWords(levelID:int,randomness:int=5)->Variant:
 	var levelWords=[]
 	var workData = filterJson(rawdata,"level",levelID,true)
 	workData=sortByDifficulty(workData)
-	print(workData.size())
 	# Load the words in ascending difficulty into the levelWords array with some randomness
 	while workData.size()>0:
 		var index=randi_range(0,min(randomness,workData.size()-1)) #Generate a random index to take out of workData from the first "randomness" values

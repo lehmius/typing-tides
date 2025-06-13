@@ -37,6 +37,7 @@ func _ready() -> void:
 	instancePlayer()
 	SignalBus.connect("keyPressed",receiveKey)
 	SignalBus.connect("gameOver",gameOverTriggered)
+	SignalBus.connect("levelData",handleLevelData)
 	#instanceEnemiesDEBUG(5)
 
 func _physics_process(delta: float) -> void:
@@ -231,3 +232,8 @@ func gameOverTriggered() -> void:
 func loadLevel(levelID:int) -> void:
 	pass
 	
+## Helper function to trigger when level data has been received.
+##
+## @returns: void
+func handleLevelData(levelData:Variant) -> void:
+	print(levelData)
