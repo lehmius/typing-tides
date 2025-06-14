@@ -10,7 +10,7 @@ extends CharacterBody2D
 class_name Enemy
 
 @export var text:String = "default" #: Value of the word associated with the enemy
-@export var speed:int = 500 		#: Enemy speed in pixels/second
+@export var speed:int = 300 		#: Enemy speed in pixels/second
 
 var target:Vector2 = Vector2(0,0) 	# Target the enemy is moving towards.
 var bobFrequency: float = 2.0		# Frequency of the bobbing motion

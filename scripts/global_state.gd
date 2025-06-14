@@ -1,4 +1,4 @@
 extends Node
 
-var isPaused:bool=true
+var isPaused:bool=false
 var language="deutsch" # Possible Values: deutsch, english

@@ -20,13 +20,14 @@ var score:int=0							# The total score for the level
 var wordMistakes:int=0					# Tracking per word mistakes
 var wordCorrectLetters:int=0			# Tracking per word correct letters
 var time:float=0.0						# Time since starting the level
-var isPaused:bool=false					# Tracks if the game is paused right now
 
 
 # The following are reference variables.
 var enemyReferences:Array[Enemy] = []	# Holds references to each currently instanced enemy
 var player:Node							# Holds the reference to the player
 var currentTarget:Node
+var enemySpawnTimer:Timer = Timer.new()
+var enemiesToSpawn:Variant;
 
 var playerScene: PackedScene = preload("res://scenes/player.tscn")
 var enemyScene: PackedScene = preload("res://scenes/enemy.tscn")
@@ -35,13 +36,20 @@ enum inputType{VALID,INVALID}
 
 func _ready() -> void:
 	instancePlayer()
+	# Spawn timer related
+	enemySpawnTimer.wait_time=3 #Starttime per enemy
+	enemySpawnTimer.one_shot=false #Repeat the timer
+	add_child(enemySpawnTimer)
+	# Signal related
 	SignalBus.connect("keyPressed",receiveKey)
 	SignalBus.connect("gameOver",gameOverTriggered)
 	SignalBus.connect("levelData",handleLevelData)
+	SignalBus.connect("onHit",enemyDeathHandler)
+	enemySpawnTimer.connect("timeout",spawnNextEnemy)
 	#instanceEnemiesDEBUG(5)
 
 func _physics_process(delta: float) -> void:
-	if not isPaused:
+	if not GlobalState.isPaused:
 		time+=delta
 
 ## Instances the Player within the game.
@@ -65,22 +73,14 @@ func getNextWordDEBUG() -> String:
 ## positions it at a random position just outside the screen and populates variables accordingly.
 ##
 ## @returns: void
-func instanceEnemy() -> void:
+func instanceEnemy(enemyData:Dictionary) -> void:
 	var nextEnemy = enemyScene.instantiate() 
 	nextEnemy.position = Vector2(680,randi_range(15,345))
 	nextEnemy.Player = player
-	nextEnemy.text = getNextWordDEBUG()
-	SignalBus.connect("onHit",enemyDeathHandler)
+	nextEnemy.text = enemyData["word"]
+	nextEnemy.score=enemyData["difficulty"]
 	enemyReferences+=[nextEnemy]
 	add_child(nextEnemy)
-	
-## Instances a provided amount of Enemies, to use in debugging and testing.  
-##
-## @param amount: int - The amount of enemies to spawn.
-## @returns: void
-func instanceEnemiesDEBUG(amount:int) -> void:
-	for i in range(amount):
-		instanceEnemy()
 
 ## Handles picking enemies. If no enemy is chosen, tries to assign a new one.
 ## If the amount of errors is higher than maxConsecutiveErrors an attempt is made to switch targets too.
@@ -161,6 +161,7 @@ func enemyDeathHandler(deadEnemy:Enemy,difficultyScore:float) -> void:
 	wordCorrectLetters=0
 	wordMistakes=0
 	wordsTyped+=1
+	spawnNextEnemy()
 
 ## Resets all perfomance metrics to their initialization values.
 ##
@@ -171,6 +172,10 @@ func resetPerformanceMetrics() -> void:
 	highestConsecutiveStreak=0
 	currentConsecutiveStreak=0
 	wordsTyped=0
+	score=0
+	wordMistakes=0
+	wordCorrectLetters=0
+	time=0
 
 ## Keep track of the performance metric variables.
 ##
@@ -224,6 +229,7 @@ func getCharactersPerMinute() -> float:
 ## @returns: void
 func gameOverTriggered() -> void:
 	print("GAME OVER")
+	GlobalState.isPaused=true
 
 
 ## Loads the appropriate data for a level given the levelID
@@ -236,4 +242,23 @@ func loadLevel(levelID:int) -> void:
 ##
 ## @returns: void
 func handleLevelData(levelData:Variant) -> void:
-	print(levelData)
+	resetPerformanceMetrics()
+	spawnEnemies(levelData)
+
+## Start spawning the enemies of a levelData list based on time or player destroying last enemy 
+## (whichever triggers first)
+##
+## @returns: void
+func spawnEnemies(levelData:Variant) -> void:
+	enemiesToSpawn=levelData
+	enemySpawnTimer.start()
+	enemySpawnTimer.emit_signal("timeout")
+
+## Spawn the next enemy in the enemiesToSpawn list
+##
+## @returns: void
+func spawnNextEnemy() -> void:
+	instanceEnemy(enemiesToSpawn[0])
+	enemiesToSpawn.remove_at(0)
+	enemySpawnTimer.start() # Reset the spawn timer
+	#TODO: dynamically change spawn timer based on player performance
