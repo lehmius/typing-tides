@@ -20,7 +20,8 @@ var score:int=0							# The total score for the level
 var wordMistakes:int=0					# Tracking per word mistakes
 var wordCorrectLetters:int=0			# Tracking per word correct letters
 var time:float=0.0						# Time since starting the level
-
+var enemySpawnTimerDuration:float = 3	# Time for the enemy Spawn timer, dynamically changes based on player performance
+var lastTTK:float=enemySpawnTimerDuration# Time to kill the last enemy, can't be given in method as it's also connected to a signal and connection fails with more arguments
 
 # The following are reference variables.
 var enemyReferences:Array[Enemy] = []	# Holds references to each currently instanced enemy
@@ -37,7 +38,7 @@ enum inputType{VALID,INVALID}
 func _ready() -> void:
 	instancePlayer()
 	# Spawn timer related
-	enemySpawnTimer.wait_time=3 #Starttime per enemy
+	enemySpawnTimer.wait_time=enemySpawnTimerDuration #Starttime per enemy
 	enemySpawnTimer.one_shot=false #Repeat the timer
 	add_child(enemySpawnTimer)
 	# Signal related
@@ -155,12 +156,13 @@ func receiveKey(letter:String) -> void:
 ## @param deadEnemy: Enemy - The enemy that has died
 ## @param score: Float - The score associated to that enemy
 ## @returns: void
-func enemyDeathHandler(deadEnemy:Enemy,difficultyScore:float) -> void:
+func enemyDeathHandler(deadEnemy:Enemy,difficultyScore:float,timeToKill:float) -> void:
 	score+=currentConsecutiveStreak*difficultyScore
 	enemyReferences.erase(deadEnemy)
 	wordCorrectLetters=0
 	wordMistakes=0
 	wordsTyped+=1
+	lastTTK=timeToKill
 	spawnNextEnemy()
 
 ## Resets all perfomance metrics to their initialization values.
@@ -228,6 +230,7 @@ func getCharactersPerMinute() -> float:
 ##
 ## @returns: void
 func gameOverTriggered() -> void:
+	print("Your final score is:",score)
 	print("GAME OVER")
 	GlobalState.isPaused=true
 
@@ -256,9 +259,12 @@ func spawnEnemies(levelData:Variant) -> void:
 
 ## Spawn the next enemy in the enemiesToSpawn list
 ##
+## @param: Time to kill the last enemy
 ## @returns: void
 func spawnNextEnemy() -> void:
 	instanceEnemy(enemiesToSpawn[0])
 	enemiesToSpawn.remove_at(0)
+	enemySpawnTimer.wait_time=min(0.95*lastTTK,enemySpawnTimerDuration)
 	enemySpawnTimer.start() # Reset the spawn timer
 	#TODO: dynamically change spawn timer based on player performance
+	# Semi inplemented, very basic logic so far, should take into account word difficulty too.

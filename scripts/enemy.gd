@@ -20,9 +20,11 @@ var direction: Vector2 = Vector2(0,0)# Vector from position to target, updated w
 @onready var Player:Node			# Holds a reference to the Player.
 @onready var errorAnimationPlayer:AnimationPlayer = $AnimationPlayer
 var time:float = 0.0 				# Elapsed time since node was instantiated
+var timeToKill:float = 0.0			# Elapsed time since the node has been first attacked
 const maxBobbingSeverity:float = 2.0# Scales the bobbing motion to reach (at most) this value.
-var score:float = 1.0						# Difficulty vector the enemy has assigned to it, TODO this should be overwritten when instancing the enemy 
-signal enemyDied(enemyInstance:Enemy,score:float)
+var score:float = 1.0						# Difficulty vector the enemy has assigned to it
+var hasBeenDamaged:bool = false				# A simple variable to determine if the enemy has been damaged before
+signal enemyDied(enemyInstance:Enemy,score:float,timeToKill:float)
 
 func _ready() -> void:
 	updateState()
@@ -31,6 +33,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if not GlobalState.isPaused:
 		time+=delta
+		timeToKill+=delta
 		moveEnemyToPlayer()
 
 ## Moves the enemy across the scene to a custom location in a linear path.
@@ -93,7 +96,7 @@ func takeDamage() -> void:
 ##
 ## @returns: void
 func death() -> void:
-	SignalBus.onHit.emit(self,score)
+	SignalBus.onHit.emit(self,score,timeToKill)
 	queue_free()
 
 ## Attempts to simulate a hit by the player to the enemy. If successfull, results in damage.
@@ -104,6 +107,7 @@ func death() -> void:
 func attemptHit(letter:String) -> void:
 	if letter==text.substr(0,1):
 		takeDamage()
+		if !hasBeenDamaged: hasBeenDamaged=true
 	else:
 		# If the attempted Hit is not correct, play an error shake, acting upon the Label.
 		errorAnimationPlayer.play("ErrorShake(Vertical)")
