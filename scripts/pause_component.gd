@@ -9,5 +9,5 @@ func pause() -> void:
 ## Resumes the game by setting the simulation speed to 1.
 ##
 ## returns: void
-func resume() -> void:
-	Engine.set_time_scale(0)
+func resume() -> void: 
+	Engine.set_time_scale(1)
