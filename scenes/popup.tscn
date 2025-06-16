@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bkb2d7senllgm"]
+[gd_scene load_steps=4 format=3 uid="uid://bkb2d7senllgm"]
 
 [ext_resource type="Script" uid="uid://cikus2vrw26ci" path="res://scripts/popup.gd" id="1_4ebxx"]
 [ext_resource type="FontFile" uid="uid://84a50x0xbb02" path="res://assets/fonts/Pixelscapes.ttf" id="2_cpc1a"]
+[ext_resource type="PackedScene" uid="uid://eks7rlb74et5" path="res://scenes/pause_component.tscn" id="3_gxv0h"]
 
 [node name="Control" type="Control"]
 custom_minimum_size = Vector2(640, 360)
@@ -58,5 +59,7 @@ layout_mode = 2
 theme_override_constants/line_separation = 3
 theme_override_fonts/normal_font = ExtResource("2_cpc1a")
 bbcode_enabled = true
+
+[node name="PauseComponent" parent="." instance=ExtResource("3_gxv0h")]
 
 [connection signal="button_down" from="Panel/MenuBar/Button" to="." method="_on_button_button_down"]
