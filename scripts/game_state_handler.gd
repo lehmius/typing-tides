@@ -32,6 +32,7 @@ var enemiesToSpawn:Variant;
 
 var playerScene: PackedScene = preload("res://scenes/player.tscn")
 var enemyScene: PackedScene = preload("res://scenes/enemy.tscn")
+var gameover_popup: PackedScene = preload("res://scenes/gameover_popup.tscn")
 
 enum inputType{VALID,INVALID}
 
@@ -242,6 +243,8 @@ func gameOverTriggered() -> void:
 		"wordMistakes":wordMistakes,
 		"wordCorrectLetters":wordCorrectLetters
 	}
+	var popup = gameover_popup.instantiate()
+	add_child(popup)
 	SignalBus.displayPerformance.emit(playerPerformanceMetrics)
 	GlobalState.isPaused=true
 
