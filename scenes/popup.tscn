@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkb2d7senllgm"]
+
+[ext_resource type="Script" uid="uid://cikus2vrw26ci" path="res://scripts/popup.gd" id="1_4ebxx"]
+[ext_resource type="PackedScene" uid="uid://eks7rlb74et5" path="res://scenes/pause_component.tscn" id="3_gxv0h"]
+
+[node name="Popup" type="Control"]
+custom_minimum_size = Vector2(640, 360)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4ebxx")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+offset_right = 25.0
+offset_bottom = 25.0
+
+[node name="PauseComponent" parent="." instance=ExtResource("3_gxv0h")]
+
+[connection signal="button_down" from="Panel/Button" to="." method="_on_button_button_down"]

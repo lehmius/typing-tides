@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://gfm542q4hb66"]
+
+[ext_resource type="PackedScene" uid="uid://bkb2d7senllgm" path="res://scenes/popup.tscn" id="1_1tlfo"]
+[ext_resource type="Script" uid="uid://d0svvoxajuusn" path="res://scripts/informational_popup.gd" id="1_l0x12"]
+[ext_resource type="FontFile" uid="uid://84a50x0xbb02" path="res://assets/fonts/Pixelscapes.ttf" id="2_l0x12"]
+
+[node name="InformationalPopup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l0x12")
+
+[node name="Popup" parent="." node_paths=PackedStringArray("ui_element") instance=ExtResource("1_1tlfo")]
+layout_mode = 1
+ui_element = NodePath("..")
+
+[node name="MarginContainer" type="MarginContainer" parent="Popup"]
+layout_mode = 2
+offset_left = 10.0
+offset_top = 35.0
+offset_right = 630.0
+offset_bottom = 350.0
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Popup/MarginContainer"]
+layout_mode = 2
+theme_override_constants/line_separation = 3
+theme_override_fonts/normal_font = ExtResource("2_l0x12")
+bbcode_enabled = true
