@@ -9,19 +9,49 @@ const maxConsecutiveErrors:int = 2		# Maximum of consecutive Errors, allowed to 
 # Variables
 var levelID:int=0						# ID for the currently loaded level
 var consecutiveErrors:int=0				# Amount of consecutive wrong inputs, used for targeting decay
+# Player performance metrics
+var totalLettersTyped:int=0				# The total amount of letters typed
+var totalMistakesMade:int=0				# The total amount of invalid letters typed
+var highestConsecutiveStreak:int=0		# The highest consecutive amount of valid letters typed
+var currentConsecutiveStreak:int=0		# The current amount of consecutive valid letters typed
+#var comboMeter:float=0.0				# The curent comboMeter, influencing how score gets measured (Currently not implemented)
+var wordsTyped:int=0					# How many words (=enemies) have been typed
+var score:int=0							# The total score for the level
+var wordMistakes:int=0					# Tracking per word mistakes
+var wordCorrectLetters:int=0			# Tracking per word correct letters
+var time:float=0.0						# Time since starting the level
+var enemySpawnTimerDuration:float = 3	# Time for the enemy Spawn timer, dynamically changes based on player performance
+var lastTTK:float=enemySpawnTimerDuration# Time to kill the last enemy, can't be given in method as it's also connected to a signal and connection fails with more arguments
 
 # The following are reference variables.
 var enemyReferences:Array[Enemy] = []	# Holds references to each currently instanced enemy
 var player:Node							# Holds the reference to the player
 var currentTarget:Node
+var enemySpawnTimer:Timer = Timer.new()
+var enemiesToSpawn:Variant;
 
 var playerScene: PackedScene = preload("res://scenes/player.tscn")
 var enemyScene: PackedScene = preload("res://scenes/enemy.tscn")
 
+enum inputType{VALID,INVALID}
+
 func _ready() -> void:
 	instancePlayer()
+	# Spawn timer related
+	enemySpawnTimer.wait_time=enemySpawnTimerDuration #Starttime per enemy
+	enemySpawnTimer.one_shot=false #Repeat the timer
+	add_child(enemySpawnTimer)
+	# Signal related
 	SignalBus.connect("keyPressed",receiveKey)
-	instanceEnemiesDEBUG(5)
+	SignalBus.connect("gameOver",gameOverTriggered)
+	SignalBus.connect("levelData",handleLevelData)
+	SignalBus.connect("onHit",enemyDeathHandler)
+	enemySpawnTimer.connect("timeout",spawnNextEnemy)
+	#instanceEnemiesDEBUG(5)
+
+func _physics_process(delta: float) -> void:
+	if not GlobalState.isPaused:
+		time+=delta
 
 ## Instances the Player within the game.
 ##
@@ -35,31 +65,23 @@ func instancePlayer() -> void:
 ## Until a database is available, this function is a placeholder to generate basic words for testing. 
 ##
 ## @returns: A random word from a hardcoded list as a String.
-func getNextWord() -> String:
+func getNextWordDEBUG() -> String:
 	var wordlist="Katze,Hund,Haus,Apfel,Buch,Tisch,Wasser,Stadt,Fenster,Blume,Regen,Erde,Lächeln,Fahrrad,Mond".to_lower().split(",") # Remove .to_lower() after testing TODO
 	var word=wordlist[randi_range(0,wordlist.size()-1)]
 	return word
 
-## Instances an enemy scene with a word from the getNextWord function, 
+## Instances an enemy scene with a word from the getNextWordDEBUG function, 
 ## positions it at a random position just outside the screen and populates variables accordingly.
 ##
 ## @returns: void
-func instanceEnemy() -> void:
+func instanceEnemy(enemyData:Dictionary) -> void:
 	var nextEnemy = enemyScene.instantiate() 
 	nextEnemy.position = Vector2(680,randi_range(15,345))
 	nextEnemy.Player = player
-	nextEnemy.text = getNextWord()
-	SignalBus.connect("onHit",enemyDeathHandler)
+	nextEnemy.text = enemyData["word"]
+	nextEnemy.score=enemyData["difficulty"]
 	enemyReferences+=[nextEnemy]
 	add_child(nextEnemy)
-	
-## Instances a provided amount of Enemies, to use in debugging and testing.  
-##
-## @param amount: int - The amount of enemies to spawn.
-## @returns: void
-func instanceEnemiesDEBUG(amount:int) -> void:
-	for i in range(amount):
-		instanceEnemy()
 
 ## Handles picking enemies. If no enemy is chosen, tries to assign a new one.
 ## If the amount of errors is higher than maxConsecutiveErrors an attempt is made to switch targets too.
@@ -117,13 +139,132 @@ func setTarget(target:Enemy) -> void:
 ## @param letter: String - Button was pressed in an InputEvent.
 ## @returns: void
 func receiveKey(letter:String) -> void:
-	updateEnemyTargeting(letter)
-	if currentTarget!=null:
-		currentTarget.attemptHit(letter)
+	if not GlobalState.isPaused:
+		updateEnemyTargeting(letter)
+		if currentTarget!=null:
+			if currentTarget.text.substr(0,1)==letter:
+				updatePerformanceMetrics(inputType.VALID)
+			else:
+				updatePerformanceMetrics(inputType.INVALID)
+			currentTarget.attemptHit(letter)
+		else: # Gets reached when the player tried to target something but no valid target was found.
+			updatePerformanceMetrics(inputType.INVALID)
+		#displayPerformanceMetricsDEBUG()
 
 ## Handler function for when an enemy died. Used to clear the reference out of the enemyReferences array.
 ##
-## @ param deadEnemy: Enemy
+## @param deadEnemy: Enemy - The enemy that has died
+## @param score: Float - The score associated to that enemy
 ## @returns: void
-func enemyDeathHandler(deadEnemy:Enemy) -> void:
+func enemyDeathHandler(deadEnemy:Enemy,difficultyScore:float,timeToKill:float) -> void:
+	score+=currentConsecutiveStreak*difficultyScore
 	enemyReferences.erase(deadEnemy)
+	wordCorrectLetters=0
+	wordMistakes=0
+	wordsTyped+=1
+	lastTTK=timeToKill
+	spawnNextEnemy()
+
+## Resets all perfomance metrics to their initialization values.
+##
+## @returns:void
+func resetPerformanceMetrics() -> void:
+	totalLettersTyped=0
+	totalMistakesMade=0
+	highestConsecutiveStreak=0
+	currentConsecutiveStreak=0
+	wordsTyped=0
+	score=0
+	wordMistakes=0
+	wordCorrectLetters=0
+	time=0
+
+## Keep track of the performance metric variables.
+##
+## @param input: inputType - specify if the input made is a valid or invalid input.
+## @returns: void
+func updatePerformanceMetrics(input:inputType) -> void:
+	totalLettersTyped+=1
+	if input==inputType.VALID:
+		wordCorrectLetters+=1
+		currentConsecutiveStreak+=1
+		if currentConsecutiveStreak>highestConsecutiveStreak:
+			highestConsecutiveStreak=currentConsecutiveStreak
+	elif input==inputType.INVALID:
+		wordMistakes+=1
+		totalMistakesMade+=1
+		currentConsecutiveStreak=0
+
+## Function to display the performance metrics for debugging 
+##
+## @returns: void
+func displayPerformanceMetricsDEBUG() -> void:
+	print("===Performance metrics:===")
+	print("Total letters typed: ",totalLettersTyped)
+	print("Total mistakes made: ",totalMistakesMade)
+	print("Current consecutive streak: ",currentConsecutiveStreak)
+	print("Highest consecutive streak: ",highestConsecutiveStreak)
+
+## Calculate the accuracy of this word
+##
+## @returns: float - The accuracy of the word as a value between 0 and 1
+func getWordAccuracy() -> float:
+	return wordCorrectLetters/(wordCorrectLetters+wordMistakes)
+
+## Calculate total accuracy of the player in the level
+##
+## @returns: float - The total accuracy
+func getTotalAccuracy() -> float:
+	if not totalLettersTyped==0: return (totalLettersTyped-totalMistakesMade)/totalLettersTyped
+	else: return -1
+
+## Calculate the characters per minute typed
+##
+## @returns: float - Characters per minute (including wrong ones)
+func getCharactersPerMinute() -> float:
+	if not time==0: return totalLettersTyped/(time/60)
+	else: return -1
+
+## Helper function to trigger when the level is over as the player has been hit. 
+## TODO: Implement endscreen and switch to main menu
+##
+## @returns: void
+func gameOverTriggered() -> void:
+	print("Your final score is:",score)
+	print("GAME OVER")
+	GlobalState.isPaused=true
+
+
+## Loads the appropriate data for a level given the levelID
+##
+## @returns: void
+func loadLevel(levelID:int) -> void:
+	pass
+	
+## Helper function to trigger when level data has been received.
+##
+## @returns: void
+func handleLevelData(levelData:Variant) -> void:
+	resetPerformanceMetrics()
+	spawnEnemies(levelData)
+
+## Start spawning the enemies of a levelData list based on time or player destroying last enemy 
+## (whichever triggers first)
+##
+## @returns: void
+func spawnEnemies(levelData:Variant) -> void:
+	enemiesToSpawn=levelData
+	enemySpawnTimer.start()
+	enemySpawnTimer.emit_signal("timeout")
+
+## Spawn the next enemy in the enemiesToSpawn list
+##
+## @param: Time to kill the last enemy
+## @returns: void
+func spawnNextEnemy() -> void:
+	instanceEnemy(enemiesToSpawn[0])
+	enemiesToSpawn.remove_at(0)
+	enemySpawnTimer.wait_time=min(0.95*lastTTK,enemySpawnTimerDuration)
+	enemySpawnTimer.start() # Reset the spawn timer
+	#TODO: dynamically change spawn timer based on player performance
+	# Semi inplemented, very basic logic so far, should take into account word difficulty too.

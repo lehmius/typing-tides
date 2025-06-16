@@ -10,9 +10,8 @@ extends CharacterBody2D
 class_name Enemy
 
 @export var text:String = "default" #: Value of the word associated with the enemy
-@export var speed:int = 500 		#: Enemy speed in pixels/second
+@export var speed:int = 300 		#: Enemy speed in pixels/second
 
-var isPaused:bool = false 			# Flag to pause all movement
 var target:Vector2 = Vector2(0,0) 	# Target the enemy is moving towards.
 var bobFrequency: float = 2.0		# Frequency of the bobbing motion
 var bobAmplitude: float = 4.0			# Amplitude of the bobbing motion
@@ -21,17 +20,20 @@ var direction: Vector2 = Vector2(0,0)# Vector from position to target, updated w
 @onready var Player:Node			# Holds a reference to the Player.
 @onready var errorAnimationPlayer:AnimationPlayer = $AnimationPlayer
 var time:float = 0.0 				# Elapsed time since node was instantiated
+var timeToKill:float = 0.0			# Elapsed time since the node has been first attacked
 const maxBobbingSeverity:float = 2.0# Scales the bobbing motion to reach (at most) this value.
-
-signal enemyDied(enemyInstance:Enemy)
+var score:float = 1.0						# Difficulty vector the enemy has assigned to it
+var hasBeenDamaged:bool = false				# A simple variable to determine if the enemy has been damaged before
+signal enemyDied(enemyInstance:Enemy,score:float,timeToKill:float)
 
 func _ready() -> void:
 	updateState()
 	setBobbingDynamics()
 
 func _physics_process(delta: float) -> void:
-	if not isPaused:
+	if not GlobalState.isPaused:
 		time+=delta
+		timeToKill+=delta
 		moveEnemyToPlayer()
 
 ## Moves the enemy across the scene to a custom location in a linear path.
@@ -41,11 +43,12 @@ func _physics_process(delta: float) -> void:
 ## @param custom_target: Vector 2 - The target that the enemy should move to.
 ## @returns: void
 func moveEnemyTo(custom_target:Vector2) -> void:
-	if position.distance_to(custom_target) > 5: # Only move if enemy is not already on top of target 
-		direction = (custom_target - position).normalized()
-		velocity = direction * speed
-		move_and_slide() # Automatically handles frame rate independent movement
-	addBobbing()
+	if not GlobalState.isPaused:
+		if position.distance_to(custom_target) > 5: # Only move if enemy is not already on top of target 
+			direction = (custom_target - position).normalized()
+			velocity = direction * speed
+			move_and_slide() # Automatically handles frame rate independent movement
+		addBobbing()
 
 ## Moves the enemy across the scene to the player in a linear path.
 ##
@@ -93,7 +96,7 @@ func takeDamage() -> void:
 ##
 ## @returns: void
 func death() -> void:
-	SignalBus.onHit.emit(self)
+	SignalBus.onHit.emit(self,score,timeToKill)
 	queue_free()
 
 ## Attempts to simulate a hit by the player to the enemy. If successfull, results in damage.
@@ -104,6 +107,7 @@ func death() -> void:
 func attemptHit(letter:String) -> void:
 	if letter==text.substr(0,1):
 		takeDamage()
+		if !hasBeenDamaged: hasBeenDamaged=true
 	else:
 		# If the attempted Hit is not correct, play an error shake, acting upon the Label.
 		errorAnimationPlayer.play("ErrorShake(Vertical)")

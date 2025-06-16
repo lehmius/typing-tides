@@ -1,9 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c78g2adhhrrc"]
 
-[sub_resource type="GDScript" id="GDScript_xutkc"]
-script/source = "extends Node
-
-"
+[ext_resource type="Script" uid="uid://g258qbk82kn6" path="res://scripts/global_state.gd" id="1_nvx4l"]
 
 [node name="GlobalState" type="Node"]
-script = SubResource("GDScript_xutkc")
+script = ExtResource("1_nvx4l")
