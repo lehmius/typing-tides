@@ -24,13 +24,7 @@ offset_top = 10.0
 offset_right = -10.0
 offset_bottom = -10.0
 
-[node name="MenuBar" type="MenuBar" parent="Panel"]
-layout_mode = 2
-anchor_right = 1.0
-anchor_bottom = 0.074
-offset_bottom = -0.16
-
-[node name="Button" type="Button" parent="Panel/MenuBar"]
+[node name="Button" type="Button" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
 offset_right = 25.0
@@ -62,4 +56,4 @@ bbcode_enabled = true
 
 [node name="PauseComponent" parent="." instance=ExtResource("3_gxv0h")]
 
-[connection signal="button_down" from="Panel/MenuBar/Button" to="." method="_on_button_button_down"]
+[connection signal="button_down" from="Panel/Button" to="." method="_on_button_button_down"]
