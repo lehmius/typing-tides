@@ -232,6 +232,17 @@ func getCharactersPerMinute() -> float:
 func gameOverTriggered() -> void:
 	print("Your final score is:",score)
 	print("GAME OVER")
+	var playerPerformanceMetrics:Dictionary={
+		"totalLettersTyped":totalLettersTyped,
+		"totalMistakesMade":totalMistakesMade,
+		"highestConsecutiveStreak":highestConsecutiveStreak,
+		"currentConsecutiveStreak":currentConsecutiveStreak,
+		"wordsTyped":wordsTyped,
+		"score":score,
+		"wordMistakes":wordMistakes,
+		"wordCorrectLetters":wordCorrectLetters
+	}
+	SignalBus.displayPerformance.emit(playerPerformanceMetrics)
 	GlobalState.isPaused=true
 
 

@@ -7,3 +7,4 @@ signal onHit # Expects a reference to the Enemy that has been hit.
 signal keyPressed # Expects a event of the pressed Key.
 signal gameOver # Game Over signal if Player is hit
 signal levelData # Data transfer needed when loading a level
+signal displayPerformance # Display the player performance metrics and endscreen
