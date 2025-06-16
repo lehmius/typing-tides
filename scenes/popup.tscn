@@ -4,6 +4,7 @@
 [ext_resource type="FontFile" uid="uid://84a50x0xbb02" path="res://assets/fonts/Pixelscapes.ttf" id="2_cpc1a"]
 
 [node name="Control" type="Control"]
+custom_minimum_size = Vector2(640, 360)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
