@@ -245,13 +245,18 @@ func gameOverTriggered() -> void:
 	SignalBus.displayPerformance.emit(playerPerformanceMetrics)
 	GlobalState.isPaused=true
 
+## Returns the ID of the current level.
+##
+## @returns: int
+func getCurrentLevel() -> int:
+	return levelID
 
 ## Loads the appropriate data for a level given the levelID
 ##
 ## @returns: void
 func loadLevel(levelID:int) -> void:
-	pass
-	
+	print("Loading level ", levelID)
+
 ## Helper function to trigger when level data has been received.
 ##
 ## @returns: void
