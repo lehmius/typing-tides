@@ -262,8 +262,10 @@ func spawnEnemies(levelData:Variant) -> void:
 ## @param: Time to kill the last enemy
 ## @returns: void
 func spawnNextEnemy() -> void:
+	var endlessEndgamePoolSize:int=40		# The size at which the endless mode no longer removes entries once spawned.
 	instanceEnemy(enemiesToSpawn[0])
-	enemiesToSpawn.remove_at(0)
+	if levelID!=0 or (enemiesToSpawn.size()>endlessEndgamePoolSize):
+		enemiesToSpawn.remove_at(0)
 	enemySpawnTimer.wait_time=min(0.95*lastTTK,enemySpawnTimerDuration)
 	enemySpawnTimer.start() # Reset the spawn timer
 	#TODO: dynamically change spawn timer based on player performance
