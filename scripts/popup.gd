@@ -13,5 +13,10 @@ func _on_button_button_down() -> void:
 	Engine.set_time_scale(1.0)
 	queue_free() # Replace with function body.
 
-func set_text(text:String):
+## Sets the text of the popup panel to the text passed to the function
+##
+## @param text: Text to be displayed by the popup panel
+## @return: void
+func set_text(text:String) -> void:
+	rich_text_label.clear()
 	rich_text_label.append_text(text)
