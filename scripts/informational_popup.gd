@@ -1,7 +1,7 @@
 extends Control
 
 @export_multiline var text:String = ""
-@onready var rich_text_label:RichTextLabel = $Popup/VBoxContainer/MarginContainer/RichTextLabel
+@onready var rich_text_label:RichTextLabel = $Popup/MarginContainer/RichTextLabel
 
 func _ready() -> void:
 	set_text(text)
