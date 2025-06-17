@@ -33,6 +33,7 @@ var enemiesToSpawn:Variant;
 var playerScene: PackedScene = preload("res://scenes/player.tscn")
 var enemyScene: PackedScene = preload("res://scenes/enemy.tscn")
 var gameover_popup: PackedScene = preload("res://scenes/gameover_popup.tscn")
+var levelover_popup: PackedScene = preload("res://scenes/levelover_popup.tscn")
 
 enum inputType{VALID,INVALID}
 
@@ -164,7 +165,9 @@ func enemyDeathHandler(deadEnemy:Enemy,difficultyScore:float,timeToKill:float) -
 	wordMistakes=0
 	wordsTyped+=1
 	lastTTK=timeToKill
-	spawnNextEnemy()
+	if len(enemiesToSpawn) > 0:
+		spawnNextEnemy()
+	handleLevelOver()
 
 ## Resets all perfomance metrics to their initialization values.
 ##
@@ -226,15 +229,11 @@ func getCharactersPerMinute() -> float:
 	if not time==0: return totalLettersTyped/(time/60)
 	else: return -1
 
-## Helper function to trigger when the level is over as the player has been hit. 
-## TODO: Implement endscreen and switch to main menu
+## Calculates the players performance metrics and sends them over the signal bus.
 ##
 ## @returns: void
-func gameOverTriggered() -> void:
-	print("Your final score is:",score)
-	print("GAME OVER")
-	
-	var playerPerformanceMetrics:Dictionary={
+func emitPlayerPerformanceMetrics() -> void:
+	var playerPerformanceMetrics: Dictionary = {
 		"score":str(score) + " Punkte",
 		"charactersPerMinute": str(getCharactersPerMinute()).get_slice(".", 0),
 		"accuracy": str(getTotalAccuracy()*100).left(5) + " %",
@@ -242,9 +241,27 @@ func gameOverTriggered() -> void:
 		"time": str(time).get_slice(".", 0) + "." 
 			+ str(time).get_slice(".", 1).left(3) + " sek",
 	}
+	SignalBus.displayPerformance.emit(playerPerformanceMetrics)
+
+## Helper function to be run on detecting a level over state has been achieved.
+##
+## @returns: void
+func handleLevelOver() -> void:
+	var popup = levelover_popup.instantiate()
+	add_child(popup)
+	emitPlayerPerformanceMetrics()
+	GlobalState.isPaused = true
+
+## Helper function to trigger when the level is over as the player has been hit. 
+## TODO: Implement endscreen and switch to main menu
+##
+## @returns: void
+func gameOverTriggered() -> void:
+	print("Your final score is:",score)
+	print("GAME OVER")
 	var popup = gameover_popup.instantiate()
 	add_child(popup)
-	SignalBus.displayPerformance.emit(playerPerformanceMetrics)
+	emitPlayerPerformanceMetrics()
 	GlobalState.isPaused=true
 
 ## Returns the ID of the current level.
