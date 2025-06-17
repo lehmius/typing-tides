@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://rupxhweosc0b"]
+[gd_scene load_steps=6 format=3 uid="uid://rupxhweosc0b"]
 
 [ext_resource type="PackedScene" uid="uid://bkb2d7senllgm" path="res://scenes/popup.tscn" id="1_cvnvp"]
 [ext_resource type="Script" uid="uid://cm1tn5t6xwrsk" path="res://scripts/gameover_popup.gd" id="1_d1g1p"]
 [ext_resource type="FontFile" uid="uid://84a50x0xbb02" path="res://assets/fonts/Pixelscapes.ttf" id="2_d1g1p"]
 [ext_resource type="PackedScene" uid="uid://bj0dl4fdchtp" path="res://scenes/load_scene_button.tscn" id="4_48pdo"]
+[ext_resource type="PackedScene" uid="uid://bayificl0ex7n" path="res://scripts/score_label.tscn" id="4_knds1"]
 
 [node name="GameoverPopup" type="Control"]
 layout_mode = 3
@@ -44,12 +45,14 @@ text = "GAME OVER"
 scroll_active = false
 horizontal_alignment = 1
 
-[node name="score" type="RichTextLabel" parent="Popup/VBoxContainer"]
-custom_minimum_size = Vector2(0, 200)
+[node name="CenterContainer2" type="CenterContainer" parent="Popup/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("2_d1g1p")
-bbcode_enabled = true
-horizontal_alignment = 1
+size_flags_vertical = 4
+
+[node name="ScoreLabel" parent="Popup/VBoxContainer/CenterContainer2" instance=ExtResource("4_knds1")]
+custom_minimum_size = Vector2(620, 200)
+layout_mode = 2
+vertical_alignment = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="Popup/VBoxContainer"]
 layout_mode = 2
