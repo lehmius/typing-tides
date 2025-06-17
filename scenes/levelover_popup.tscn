@@ -1,0 +1,93 @@
+[gd_scene load_steps=6 format=3 uid="uid://cdylq5j2wdmvd"]
+
+[ext_resource type="PackedScene" uid="uid://bkb2d7senllgm" path="res://scenes/popup.tscn" id="1_f5b2d"]
+[ext_resource type="Script" uid="uid://crl2mv84n1n7g" path="res://scripts/levelover_popup.gd" id="1_rn41j"]
+[ext_resource type="FontFile" uid="uid://84a50x0xbb02" path="res://assets/fonts/Pixelscapes.ttf" id="2_lqygw"]
+[ext_resource type="PackedScene" uid="uid://bayificl0ex7n" path="res://scripts/score_label.tscn" id="3_rn41j"]
+[ext_resource type="PackedScene" uid="uid://bj0dl4fdchtp" path="res://scenes/load_scene_button.tscn" id="4_denbv"]
+
+[node name="LeveloverPopup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rn41j")
+
+[node name="Popup" parent="." instance=ExtResource("1_f5b2d")]
+layout_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Popup"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.015625
+anchor_top = 0.0972222
+anchor_right = 0.984375
+anchor_bottom = 0.972222
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Popup/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Popup/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_lqygw")
+bbcode_enabled = true
+text = "Juhu! Geschafft!"
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="CenterContainer2" type="CenterContainer" parent="Popup/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="ScoreLabel" parent="Popup/VBoxContainer/CenterContainer2" instance=ExtResource("3_rn41j")]
+custom_minimum_size = Vector2(620, 200)
+layout_mode = 2
+vertical_alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="Popup/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Popup/VBoxContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Popup/VBoxContainer/CenterContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 20
+
+[node name="RestartButton" parent="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer" instance=ExtResource("4_denbv")]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_lqygw")
+text = "Nochmal"
+
+[node name="MarginContainer2" type="MarginContainer" parent="Popup/VBoxContainer/CenterContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="MenuButton" parent="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer2" instance=ExtResource("4_denbv")]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_lqygw")
+text = "Hauptmenü"
+
+[node name="MarginContainer3" type="MarginContainer" parent="Popup/VBoxContainer/CenterContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 0
+
+[node name="NextLevelButton" parent="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer3" instance=ExtResource("4_denbv")]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_lqygw")
+text = "Nächstes Level"
+
+[connection signal="button_down" from="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer/RestartButton" to="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer/RestartButton" method="_on_button_down"]
+[connection signal="button_down" from="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer2/MenuButton" to="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer2/MenuButton" method="_on_button_down"]
+[connection signal="button_down" from="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer3/NextLevelButton" to="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer3/NextLevelButton" method="_on_button_down"]
