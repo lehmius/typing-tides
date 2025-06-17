@@ -9,3 +9,4 @@ signal gameOver # Game Over signal if Player is hit
 signal levelOver # Level Over signal for when a level is beaten.
 signal levelData # Data transfer needed when loading a level
 signal displayPerformance # Display the player performance metrics and endscreen
+signal loadLevel # Signals that a new level should be loaded.

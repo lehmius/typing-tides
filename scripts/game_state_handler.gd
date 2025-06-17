@@ -8,6 +8,13 @@ const maxConsecutiveErrors:int = 2		# Maximum of consecutive Errors, allowed to 
 
 # Variables
 var levelID:int=0						# ID for the currently loaded level
+"""
+Occupied levelIDs:
+	-2	=	Main menu
+	-1	=	debug (load debug values, used during development)
+	0	=	Endless runner
+	1-7 = 	Levels 1-7
+"""
 var consecutiveErrors:int=0				# Amount of consecutive wrong inputs, used for targeting decay
 # Player performance metrics
 var totalLettersTyped:int=0				# The total amount of letters typed
@@ -48,6 +55,7 @@ func _ready() -> void:
 	SignalBus.connect("gameOver",gameOverTriggered)
 	SignalBus.connect("levelData",handleLevelData)
 	SignalBus.connect("onHit",enemyDeathHandler)
+	SignalBus.connect("loadLevel",loadLevel)
 	enemySpawnTimer.connect("timeout",spawnNextEnemy)
 	#instanceEnemiesDEBUG(5)
 
@@ -274,7 +282,7 @@ func getCurrentLevel() -> int:
 ##
 ## @returns: void
 func loadLevel(levelID:int) -> void:
-	print("Loading level ", levelID)
+	pass
 
 ## Helper function to trigger when level data has been received.
 ##
