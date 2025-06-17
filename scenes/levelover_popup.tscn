@@ -51,6 +51,7 @@ size_flags_vertical = 4
 [node name="ScoreLabel" parent="Popup/VBoxContainer/CenterContainer2" instance=ExtResource("3_rn41j")]
 custom_minimum_size = Vector2(620, 200)
 layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_lqygw")
 vertical_alignment = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="Popup/VBoxContainer"]
