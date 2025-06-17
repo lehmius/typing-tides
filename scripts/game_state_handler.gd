@@ -10,7 +10,8 @@ const maxConsecutiveErrors:int = 2		# Maximum of consecutive Errors, allowed to 
 var levelID:int=0						# ID for the currently loaded level
 """
 Occupied levelIDs:
-	-2	=	Main menu
+	-3	=	Level select
+	-2	=	Mode select
 	-1	=	debug (load debug values, used during development)
 	0	=	Endless runner
 	1-7 = 	Levels 1-7
