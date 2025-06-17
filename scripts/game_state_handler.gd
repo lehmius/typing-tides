@@ -216,7 +216,7 @@ func getWordAccuracy() -> float:
 ##
 ## @returns: float - The total accuracy
 func getTotalAccuracy() -> float:
-	if not totalLettersTyped==0: return (totalLettersTyped-totalMistakesMade)/totalLettersTyped
+	if not totalLettersTyped==0: return (float(totalLettersTyped)-float(totalMistakesMade))/float(totalLettersTyped)
 	else: return -1
 
 ## Calculate the characters per minute typed
@@ -233,15 +233,14 @@ func getCharactersPerMinute() -> float:
 func gameOverTriggered() -> void:
 	print("Your final score is:",score)
 	print("GAME OVER")
+	
 	var playerPerformanceMetrics:Dictionary={
-		"totalLettersTyped":totalLettersTyped,
-		"totalMistakesMade":totalMistakesMade,
-		"highestConsecutiveStreak":highestConsecutiveStreak,
-		"currentConsecutiveStreak":currentConsecutiveStreak,
-		"wordsTyped":wordsTyped,
-		"score":score,
-		"wordMistakes":wordMistakes,
-		"wordCorrectLetters":wordCorrectLetters
+		"score":str(score) + " Punkte",
+		"charactersPerMinute": str(getCharactersPerMinute()).get_slice(".", 0),
+		"accuracy": str(getTotalAccuracy()*100).left(5) + " %",
+		"highestConsecutiveStreak":str(highestConsecutiveStreak) + " Zeichen",
+		"time": str(time).get_slice(".", 0) + "." 
+			+ str(time).get_slice(".", 1).left(3) + " sek",
 	}
 	var popup = gameover_popup.instantiate()
 	add_child(popup)
