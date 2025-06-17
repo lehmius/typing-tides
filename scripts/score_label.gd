@@ -11,7 +11,7 @@ func _ready() -> void:
 ## @returns: void
 func _on_playerPerformanceMetrics(playerPerformanceMetrics: Dictionary) -> void:
 	append_text("""[center][table=2]
-	[cell][left]score[/left][/left][/cell][cell][left]{score}[/left][/cell]
+	[cell][left]score[/left][/cell][cell][left]{score}[/left][/cell]
 	[cell][left]Zeichen/min[/left][/cell][cell][left]{charactersPerMinute}[/left][/cell]
 	[cell][left]Genauigkeit[/left][/cell][cell][left]{accuracy}[/left][/cell]
 	[cell][left]Beste Streak[/left][/cell][cell][left]{highestConsecutiveStreak}[/left][/cell]
