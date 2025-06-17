@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://dorm7t51ukd3j"]
+
+[ext_resource type="Texture2D" uid="uid://duonw8rod1fqh" path="res://assets/levels/menu_screens/EndlessOrLevel.png" id="1_pskx3"]
+
+[node name="ModeSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_pskx3")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 286.0
+offset_right = 310.0
+offset_bottom = 347.0
+text = "Lerne das 10 Finger Schreiben in
+maßgeschneiderten Leveln"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 380.0
+offset_top = 15.0
+offset_right = 595.0
+offset_bottom = 57.0
+text = "Prüfe deine Fähigkeiten
+in einem Endless-Runner"
+horizontal_alignment = 1
+vertical_alignment = 1

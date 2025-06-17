@@ -282,7 +282,10 @@ func getCurrentLevel() -> int:
 ##
 ## @returns: void
 func loadLevel(levelID:int) -> void:
-	pass
+	match levelID:
+		-2:
+			print("loading main menu")
+	print("Loading level ", levelID)
 
 ## Helper function to trigger when level data has been received.
 ##

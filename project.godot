@@ -27,6 +27,10 @@ DataLoader="*res://scripts/data_loader.gd"
 window/size/viewport_width=640
 window/size/viewport_height=360
 
+[gui]
+
+theme/custom_font="uid://84a50x0xbb02"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
