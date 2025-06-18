@@ -38,6 +38,7 @@ var levelover_popup: PackedScene = preload("res://scenes/levelover_popup.tscn")
 enum inputType{VALID,INVALID}
 
 func _ready() -> void:
+	print("gamestatehandler ready")
 	# instancePlayer()
 	loadLevel(-4)
 	# Signal related
@@ -45,7 +46,8 @@ func _ready() -> void:
 	SignalBus.connect("gameOver",gameOverTriggered)
 	SignalBus.connect("levelData",handleLevelData)
 	SignalBus.connect("onHit",enemyDeathHandler)
-	SignalBus.connect("loadLevel",loadLevel)
+	if not SignalBus.is_connected("loadLevel",loadLevel):
+		SignalBus.connect("loadLevel",loadLevel,)
 	#instanceEnemiesDEBUG(5)
 
 func _physics_process(delta: float) -> void:
@@ -279,6 +281,8 @@ Occupied levelIDs:
 ##
 ## @returns: void
 func loadLevel(levelID:int) -> void:
+	print("Loading level ", levelID)
+	print("loadLevel called by ", self.name, " with levelID ", levelID)
 	if levelID>=0:
 		# Spawn timer related
 		enemySpawnTimer.wait_time=enemySpawnTimerDuration #Starttime per enemy
@@ -290,8 +294,10 @@ func loadLevel(levelID:int) -> void:
 			var splashScreen:PackedScene = load("res://scenes/welcome_splash_screen.tscn")
 			add_child(splashScreen.instantiate())
 		-3:
+			var modeSelect:PackedScene = load("res://scenes/mode_select.tscn")
+			add_child(modeSelect.instantiate())
+		-2:
 			pass
-	print("Loading level ", levelID)
 
 ## Helper function to trigger when level data has been received.
 ##
