@@ -9,7 +9,7 @@ signal shoot(Projectile, pressed_key, global_position)
 
 func _ready() -> void:
 	$Area2D.connect("body_entered",sendGameOver)
-	pass
+	$AnimatedSprite2D.play("player")
 
 ## Emits the shoot(projectile, pressedKey, global_position) signal on InputEventKey.pressed event.
 ##

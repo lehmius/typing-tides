@@ -38,7 +38,6 @@ var levelover_popup: PackedScene = preload("res://scenes/levelover_popup.tscn")
 enum inputType{VALID,INVALID}
 
 func _ready() -> void:
-	# instancePlayer()
 	loadLevel(-4)
 	# Signal related
 	SignalBus.connect("keyPressed",receiveKey)
