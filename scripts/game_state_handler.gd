@@ -8,14 +8,6 @@ const maxConsecutiveErrors:int = 2		# Maximum of consecutive Errors, allowed to 
 
 # Variables
 var levelID:int=0						# ID for the currently loaded level
-"""
-Occupied levelIDs:
-	-3	=	Level select
-	-2	=	Mode select
-	-1	=	debug (load debug values, used during development)
-	0	=	Endless runner
-	1-7 = 	Levels 1-7
-"""
 var consecutiveErrors:int=0				# Amount of consecutive wrong inputs, used for targeting decay
 # Player performance metrics
 var totalLettersTyped:int=0				# The total amount of letters typed
@@ -46,18 +38,14 @@ var levelover_popup: PackedScene = preload("res://scenes/levelover_popup.tscn")
 enum inputType{VALID,INVALID}
 
 func _ready() -> void:
-	instancePlayer()
-	# Spawn timer related
-	enemySpawnTimer.wait_time=enemySpawnTimerDuration #Starttime per enemy
-	enemySpawnTimer.one_shot=false #Repeat the timer
-	add_child(enemySpawnTimer)
+	# instancePlayer()
+	loadLevel(-4)
 	# Signal related
 	SignalBus.connect("keyPressed",receiveKey)
 	SignalBus.connect("gameOver",gameOverTriggered)
 	SignalBus.connect("levelData",handleLevelData)
 	SignalBus.connect("onHit",enemyDeathHandler)
 	SignalBus.connect("loadLevel",loadLevel)
-	enemySpawnTimer.connect("timeout",spawnNextEnemy)
 	#instanceEnemiesDEBUG(5)
 
 func _physics_process(delta: float) -> void:
@@ -278,14 +266,31 @@ func gameOverTriggered() -> void:
 ## @returns: int
 func getCurrentLevel() -> int:
 	return levelID
-
+"""
+Occupied levelIDs:
+	-4	=	Splash screen
+	-3	=	Mode select
+	-2	=	Level select
+	-1	=	debug (load debug values, used during development)
+	0	=	Endless runner
+	1-7 = 	Levels 1-7
+"""
 ## Loads the appropriate data for a level given the levelID
 ##
 ## @returns: void
 func loadLevel(levelID:int) -> void:
+	if levelID>=0:
+		# Spawn timer related
+		enemySpawnTimer.wait_time=enemySpawnTimerDuration #Starttime per enemy
+		enemySpawnTimer.one_shot=false #Repeat the timer
+		add_child(enemySpawnTimer)
+		enemySpawnTimer.connect("timeout",spawnNextEnemy)
 	match levelID:
-		-2:
-			print("loading main menu")
+		-4:
+			var splashScreen:PackedScene = load("res://scenes/welcome_splash_screen.tscn")
+			add_child(splashScreen.instantiate())
+		-3:
+			pass
 	print("Loading level ", levelID)
 
 ## Helper function to trigger when level data has been received.

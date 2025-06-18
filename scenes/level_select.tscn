@@ -33,6 +33,7 @@ offset_bottom = 137.0
 
 [node name="Button2" type="Button" parent="ButtonContainer"]
 self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
 offset_left = 180.0
 offset_top = 40.0
 offset_right = 308.0
@@ -40,6 +41,7 @@ offset_bottom = 137.0
 
 [node name="Button3" type="Button" parent="ButtonContainer"]
 self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
 offset_left = 332.0
 offset_top = 40.0
 offset_right = 460.0
@@ -47,6 +49,7 @@ offset_bottom = 137.0
 
 [node name="Button4" type="Button" parent="ButtonContainer"]
 self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
 offset_left = 484.0
 offset_top = 40.0
 offset_right = 612.0
@@ -54,6 +57,7 @@ offset_bottom = 137.0
 
 [node name="Button5" type="Button" parent="ButtonContainer"]
 self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
 offset_left = 28.0
 offset_top = 223.0
 offset_right = 156.0
@@ -61,6 +65,7 @@ offset_bottom = 320.0
 
 [node name="Button6" type="Button" parent="ButtonContainer"]
 self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
 offset_left = 180.0
 offset_top = 223.0
 offset_right = 308.0
@@ -68,6 +73,7 @@ offset_bottom = 320.0
 
 [node name="Button7" type="Button" parent="ButtonContainer"]
 self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
 offset_left = 332.0
 offset_top = 223.0
 offset_right = 460.0
