@@ -6,5 +6,4 @@ func _input(event: InputEvent) -> void:
 			SignalBus.loadLevel.emit(-2)
 		else:
 			SignalBus.loadLevel.emit(0)
-		print("free")
 		queue_free()

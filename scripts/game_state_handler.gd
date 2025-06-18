@@ -28,7 +28,8 @@ var enemyReferences:Array[Enemy] = []	# Holds references to each currently insta
 var player:Node							# Holds the reference to the player
 var currentTarget:Node
 var enemySpawnTimer:Timer = Timer.new()
-var enemiesToSpawn:Variant;
+var enemiesToSpawn:Variant
+var backgroundNode:Node
 
 var playerScene: PackedScene = preload("res://scenes/player.tscn")
 var enemyScene: PackedScene = preload("res://scenes/enemy.tscn")
@@ -281,23 +282,54 @@ Occupied levelIDs:
 ##
 ## @returns: void
 func loadLevel(levelID:int) -> void:
-	print("Loading level ", levelID)
-	print("loadLevel called by ", self.name, " with levelID ", levelID)
-	if levelID>=0:
-		# Spawn timer related
+	# Reset states / cleanup
+	if backgroundNode != null:
+		backgroundNode.queue_free()
+	# Timer instantiation if needed
+	if levelID>=-1:
 		enemySpawnTimer.wait_time=enemySpawnTimerDuration #Starttime per enemy
 		enemySpawnTimer.one_shot=false #Repeat the timer
 		add_child(enemySpawnTimer)
 		enemySpawnTimer.connect("timeout",spawnNextEnemy)
+
+	var background:PackedScene
+	var backgroundIMG:Texture2D
+	var scene:PackedScene
+	
 	match levelID:
 		-4:
-			var splashScreen:PackedScene = load("res://scenes/welcome_splash_screen.tscn")
-			add_child(splashScreen.instantiate())
+			scene = load("res://scenes/welcome_splash_screen.tscn")
 		-3:
-			var modeSelect:PackedScene = load("res://scenes/mode_select.tscn")
-			add_child(modeSelect.instantiate())
+			scene = load("res://scenes/mode_select.tscn")
 		-2:
+			scene = load("res://scenes/level_select.tscn")
+		-1:
+			# Debug/ No longer needed
 			pass
+		0:
+			# Endless runner TODO
+			pass
+		1:
+			backgroundIMG = load("res://assets/levels/background/level_1.png")
+		2: 
+			backgroundIMG = load("res://assets/levels/background/level_2_option1.png")
+		3:
+			backgroundIMG = load("res://assets/levels/background/Level_3.png")
+		4:
+			backgroundIMG = load("res://assets/levels/background/Level_4.png")
+		5:
+			backgroundIMG = load("res://assets/levels/background/Level_5.png")
+		6:
+			backgroundIMG = load("res://assets/levels/background/Level_6.png")
+		7:
+			backgroundIMG = load("res://assets/levels/background/Level_7.png")
+	if levelID<-1:
+		add_child(scene.instantiate())
+	elif levelID>-1:
+		backgroundNode = TextureRect.new()
+		backgroundNode.texture=backgroundIMG
+		add_child(backgroundNode)
+	GlobalState.levelID=levelID
 
 ## Helper function to trigger when level data has been received.
 ##
