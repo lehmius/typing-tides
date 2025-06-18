@@ -7,7 +7,6 @@ extends Node
 const maxConsecutiveErrors:int = 2		# Maximum of consecutive Errors, allowed to be made before changing targeting.
 
 # Variables
-var levelID:int=0						# ID for the currently loaded level
 var consecutiveErrors:int=0				# Amount of consecutive wrong inputs, used for targeting decay
 # Player performance metrics
 var totalLettersTyped:int=0				# The total amount of letters typed
@@ -39,7 +38,6 @@ var levelover_popup: PackedScene = preload("res://scenes/levelover_popup.tscn")
 enum inputType{VALID,INVALID}
 
 func _ready() -> void:
-	print("gamestatehandler ready")
 	# instancePlayer()
 	loadLevel(-4)
 	# Signal related
@@ -83,7 +81,45 @@ func instanceEnemy(enemyData:Dictionary) -> void:
 	nextEnemy.text = enemyData["word"]
 	nextEnemy.score=enemyData["difficulty"]
 	enemyReferences+=[nextEnemy]
+	var sprite:AnimatedSprite2D=nextEnemy.get_node("AnimatedSprite2D")
+	sprite.play(getEnemyAnimations(GlobalState.levelID,sprite))
 	add_child(nextEnemy)
+
+## Returns a valid/possible enemy animation for the levelID as a string (animation name)
+##
+## @returns: String - Animation name of a valid animation
+func getEnemyAnimations(levelID:int,enemySprite:AnimatedSprite2D) -> String:
+	var candidates:Array[String] = []
+	var animationData:PackedStringArray=[]
+	var animationNames="""1-3-red
+	1-3-orange
+	1-3-grey
+	1-3-orange
+	1-5-orange
+	1-5-pink
+	1-5-purple
+	1-5-red
+	2-4-blue
+	2-4-green
+	2-4-orange
+	2-4-purple
+	3-6-jblue
+	3-6-jpink
+	4-7-eel
+	5-swordfish
+	6-octopus
+	7-shark"""
+	animationNames = animationNames.replace("\t","")
+	animationData=animationNames.split("\n")
+	for entry in animationData:
+		var data = entry.split("-")
+		if data.size()==3:
+			if levelID==int(data[0]) or levelID==int(data[1]):
+				candidates+=[entry]
+		elif data.size()==2:
+			if levelID==int(data[0]):
+				candidates+=[entry]
+	return candidates[randi_range(0,candidates.size()-1)]
 
 ## Handles picking enemies. If no enemy is chosen, tries to assign a new one.
 ## If the amount of errors is higher than maxConsecutiveErrors an attempt is made to switch targets too.
@@ -167,7 +203,9 @@ func enemyDeathHandler(deadEnemy:Enemy,difficultyScore:float,timeToKill:float) -
 	lastTTK=timeToKill
 	if len(enemiesToSpawn) > 0:
 		spawnNextEnemy()
-	handleLevelOver()
+	else:
+		if enemyReferences.size()==0:
+			handleLevelOver()
 
 ## Resets all perfomance metrics to their initialization values.
 ##
@@ -268,7 +306,7 @@ func gameOverTriggered() -> void:
 ##
 ## @returns: int
 func getCurrentLevel() -> int:
-	return levelID
+	return GlobalState.levelID
 """
 Occupied levelIDs:
 	-4	=	Splash screen
@@ -329,6 +367,8 @@ func loadLevel(levelID:int) -> void:
 		backgroundNode = TextureRect.new()
 		backgroundNode.texture=backgroundIMG
 		add_child(backgroundNode)
+		instancePlayer()
+		enemySpawnTimer.start()
 	GlobalState.levelID=levelID
 
 ## Helper function to trigger when level data has been received.
@@ -354,7 +394,7 @@ func spawnEnemies(levelData:Variant) -> void:
 func spawnNextEnemy() -> void:
 	var endlessEndgamePoolSize:int=40		# The size at which the endless mode no longer removes entries once spawned.
 	instanceEnemy(enemiesToSpawn[0])
-	if levelID!=0 or (enemiesToSpawn.size()>endlessEndgamePoolSize):
+	if GlobalState.levelID!=0 or (enemiesToSpawn.size()>endlessEndgamePoolSize):
 		enemiesToSpawn.remove_at(0)
 	enemySpawnTimer.wait_time=min(0.95*lastTTK,enemySpawnTimerDuration)
 	enemySpawnTimer.start() # Reset the spawn timer
