@@ -5,7 +5,7 @@
 [ext_resource type="FontFile" uid="uid://84a50x0xbb02" path="res://assets/fonts/Pixelscapes.ttf" id="3_4ra3w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c4w8v"]
-radius = 19.0263
+radius = 10.0499
 
 [sub_resource type="Animation" id="Animation_4ra3w"]
 resource_name = "ErrorShake(Vertical)"
