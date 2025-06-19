@@ -1,0 +1,67 @@
+[gd_resource type="SpriteFrames" load_steps=10 format=3 uid="uid://bvdpyqovplr5d"]
+
+[ext_resource type="Texture2D" uid="uid://buvky1bpax2rb" path="res://assets/levels/enemies/fish2_lvl1_lvl3/Orange.png" id="1_3whii"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uypl2"]
+atlas = ExtResource("1_3whii")
+region = Rect2(0, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxbhw"]
+atlas = ExtResource("1_3whii")
+region = Rect2(32, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f3efw"]
+atlas = ExtResource("1_3whii")
+region = Rect2(64, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kb444"]
+atlas = ExtResource("1_3whii")
+region = Rect2(96, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kq6h"]
+atlas = ExtResource("1_3whii")
+region = Rect2(128, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nb0th"]
+atlas = ExtResource("1_3whii")
+region = Rect2(160, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4sgg4"]
+atlas = ExtResource("1_3whii")
+region = Rect2(192, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2pdua"]
+atlas = ExtResource("1_3whii")
+region = Rect2(224, 0, 32, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uypl2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lxbhw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f3efw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kb444")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kq6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nb0th")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4sgg4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2pdua")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}]

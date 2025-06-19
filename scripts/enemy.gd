@@ -29,6 +29,7 @@ signal enemyDied(enemyInstance:Enemy,score:float,timeToKill:float)
 func _ready() -> void:
 	updateState()
 	setBobbingDynamics()
+	set_animation("idle")
 
 func _physics_process(delta: float) -> void:
 	if not GlobalState.isPaused:
@@ -111,3 +112,11 @@ func attemptHit(letter:String) -> void:
 	else:
 		# If the attempted Hit is not correct, play an error shake, acting upon the Label.
 		errorAnimationPlayer.play("ErrorShake(Vertical)")
+
+## Sets the animation to be played and flips the animated sprite horizontally.
+##
+## @param animation: The name of the animation to be played
+## @returns: void
+func set_animation(animation: String) -> void:
+	visualSprite.play(animation)
+	visualSprite.set_flip_h(true)
