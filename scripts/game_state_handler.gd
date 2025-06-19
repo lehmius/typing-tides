@@ -248,14 +248,14 @@ func getWordAccuracy() -> float:
 ## @returns: float - The total accuracy
 func getTotalAccuracy() -> float:
 	if not totalLettersTyped==0: return (float(totalLettersTyped)-float(totalMistakesMade))/float(totalLettersTyped)
-	else: return -1
+	else: return 0
 
 ## Calculate the characters per minute typed
 ##
 ## @returns: float - Characters per minute (including wrong ones)
 func getCharactersPerMinute() -> float:
 	if not time==0: return totalLettersTyped/(time/60)
-	else: return -1
+	else: return 0
 
 ## Calculates the players performance metrics and sends them over the signal bus.
 ##
@@ -281,7 +281,6 @@ func handleLevelOver() -> void:
 	GlobalState.isPaused = true
 
 ## Helper function to trigger when the level is over as the player has been hit. 
-## TODO: Implement endscreen and switch to main menu
 ##
 ## @returns: void
 func gameOverTriggered() -> void:
