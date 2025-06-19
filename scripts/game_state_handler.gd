@@ -26,7 +26,7 @@ var lastTTK:float=enemySpawnTimerDuration# Time to kill the last enemy, can't be
 var enemyReferences:Array[Enemy] = []	# Holds references to each currently instanced enemy
 var player:Node							# Holds the reference to the player
 var currentTarget:Node
-var enemySpawnTimer:Timer = Timer.new()
+var enemySpawnTimer:Timer
 var enemiesToSpawn:Variant
 var backgroundNode:Node
 
@@ -38,15 +38,25 @@ var levelover_popup: PackedScene = preload("res://scenes/levelover_popup.tscn")
 enum inputType{VALID,INVALID}
 
 func _ready() -> void:
-	loadLevel(-4)
 	# Signal related
 	SignalBus.connect("keyPressed",receiveKey)
 	SignalBus.connect("gameOver",gameOverTriggered)
-	SignalBus.connect("levelData",handleLevelData)
 	SignalBus.connect("onHit",enemyDeathHandler)
-	if not SignalBus.is_connected("loadLevel",loadLevel):
-		SignalBus.connect("loadLevel",loadLevel,)
-	#instanceEnemiesDEBUG(5)
+	SignalBus.connect("loadLevel",loadLevel)
+	
+	# Create the central timer
+	enemySpawnTimer=Timer.new()
+	add_child(enemySpawnTimer)
+	enemySpawnTimer.connect("timeout",spawnNextEnemy)
+	
+	# Create Player and turn him invisible
+	instancePlayer()
+	player.visible=false
+	
+	
+	# Load start level. THIS MUST BE DONE AFTER CREATING TIMER
+	loadLevel(-4)
+	
 
 func _physics_process(delta: float) -> void:
 	if not GlobalState.isPaused:
@@ -90,26 +100,7 @@ func instanceEnemy(enemyData:Dictionary) -> void:
 func getEnemyAnimations(levelID:int,enemySprite:AnimatedSprite2D) -> String:
 	var candidates:Array[String] = []
 	var animationData:PackedStringArray=[]
-	var animationNames="""1-3-red
-	1-3-orange
-	1-3-grey
-	1-3-orange
-	1-5-orange
-	1-5-pink
-	1-5-purple
-	1-5-red
-	2-4-blue
-	2-4-green
-	2-4-orange
-	2-4-purple
-	3-6-jblue
-	3-6-jpink
-	4-7-eel
-	5-swordfish
-	6-octopus
-	7-shark"""
-	animationNames = animationNames.replace("\t","")
-	animationData=animationNames.split("\n")
+	animationData = enemySprite.sprite_frames.get_animation_names()
 	for entry in animationData:
 		var data = entry.split("-")
 		if data.size()==3:
@@ -319,15 +310,19 @@ Occupied levelIDs:
 ##
 ## @returns: void
 func loadLevel(levelID:int) -> void:
-	# Reset states / cleanup
-	if backgroundNode != null:
-		backgroundNode.queue_free()
-	# Timer instantiation if needed
-	if levelID>=-1:
-		enemySpawnTimer.wait_time=enemySpawnTimerDuration #Starttime per enemy
-		enemySpawnTimer.one_shot=false #Repeat the timer
-		add_child(enemySpawnTimer)
-		enemySpawnTimer.connect("timeout",spawnNextEnemy)
+	GlobalState.levelID=levelID
+	#Cleanup
+	for child in get_children():
+		if child != player and child != enemySpawnTimer:
+			child.queue_free()
+	enemiesToSpawn=null
+	enemyReferences=[]
+	resetPerformanceMetrics()
+	
+	# Loads words into enemiesToSpawn
+	spawnEnemies(DataLoader.getLevelWords(-1))	
+	
+	# Load animations and backgrounds
 
 	var background:PackedScene
 	var backgroundIMG:Texture2D
@@ -360,22 +355,24 @@ func loadLevel(levelID:int) -> void:
 			backgroundIMG = load("res://assets/levels/background/Level_6.png")
 		7:
 			backgroundIMG = load("res://assets/levels/background/Level_7.png")
+	
 	if levelID<-1:
 		add_child(scene.instantiate())
 	elif levelID>-1:
 		backgroundNode = TextureRect.new()
 		backgroundNode.texture=backgroundIMG
+		backgroundNode.z_index=-5		#otherwise background gets drawn over scene
 		add_child(backgroundNode)
-		instancePlayer()
+	
+	# Set variables if the level is not a menu or meta level
+	if levelID>=-1:
+		enemySpawnTimer.stop() # Changes to timer only affect it if paused.
+		enemySpawnTimer.wait_time=enemySpawnTimerDuration #Starttime per enemy
+		enemySpawnTimer.one_shot=false #Repeat the timer
 		enemySpawnTimer.start()
-	GlobalState.levelID=levelID
+		player.visible=true
+		GlobalState.setUpaused()
 
-## Helper function to trigger when level data has been received.
-##
-## @returns: void
-func handleLevelData(levelData:Variant) -> void:
-	resetPerformanceMetrics()
-	spawnEnemies(levelData)
 
 ## Start spawning the enemies of a levelData list based on time or player destroying last enemy 
 ## (whichever triggers first)
@@ -383,6 +380,8 @@ func handleLevelData(levelData:Variant) -> void:
 ## @returns: void
 func spawnEnemies(levelData:Variant) -> void:
 	enemiesToSpawn=levelData
+	
+	enemySpawnTimer.stop()
 	enemySpawnTimer.start()
 	enemySpawnTimer.emit_signal("timeout")
 
@@ -391,11 +390,21 @@ func spawnEnemies(levelData:Variant) -> void:
 ## @param: Time to kill the last enemy
 ## @returns: void
 func spawnNextEnemy() -> void:
-	var endlessEndgamePoolSize:int=40		# The size at which the endless mode no longer removes entries once spawned.
-	instanceEnemy(enemiesToSpawn[0])
-	if GlobalState.levelID!=0 or (enemiesToSpawn.size()>endlessEndgamePoolSize):
-		enemiesToSpawn.remove_at(0)
-	enemySpawnTimer.wait_time=min(0.95*lastTTK,enemySpawnTimerDuration)
-	enemySpawnTimer.start() # Reset the spawn timer
-	#TODO: dynamically change spawn timer based on player performance
-	# Semi inplemented, very basic logic so far, should take into account word difficulty too.
+	if GlobalState.levelID>-1:
+		var endlessEndgamePoolSize:int=40		# The size at which the endless mode no longer removes entries once spawned.
+		instanceEnemy(enemiesToSpawn[0])
+		if GlobalState.levelID!=0 or (enemiesToSpawn.size()>endlessEndgamePoolSize):
+			enemiesToSpawn.remove_at(0)
+		enemySpawnTimer.wait_time=min(0.95*lastTTK,enemySpawnTimerDuration)
+		enemySpawnTimer.stop()
+		enemySpawnTimer.start() # Reset the spawn timer
+		#TODO: dynamically change spawn timer based on player performance
+		# Semi inplemented, very basic logic so far, should take into account word difficulty too.
+
+## Cleans up enemies, enemy references etc.
+##
+## @returns:void
+func cleanUpEnemies()->void:
+	for enemy in enemyReferences:
+		enemy.death()
+	enemiesToSpawn=[]

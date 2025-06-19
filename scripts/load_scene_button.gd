@@ -5,6 +5,7 @@ extends Button
 ## Calls on the GameStateHandler to load a specified scene.
 func _on_button_down() -> void:
 	GameStateHandler.loadLevel(levelID)
+	SignalBus.deleteMenus.emit()
 
 ## Sets the scene the button points to.
 ##

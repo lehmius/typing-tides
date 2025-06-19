@@ -1,11 +1,8 @@
 extends Node
 
-var rawdata;
+var rawdata:Variant=null
 var data;
 
-func _ready() -> void:
-	rawdata = loadDatabaseData()
-	SignalBus.levelData.emit(getLevelWords(-1))
 	
 ## Load the appropriate data from the database for the level provided.
 ##
@@ -32,7 +29,8 @@ func loadDatabaseData() -> Variant:
 ## @returns:
 func filterJson(data:Variant,conditionName:String,conditionValue,eraseAfter:bool) -> Variant:
 	var returnArray:Variant=[]
-	for entry in data:
+	var datacopy = data.duplicate(true)
+	for entry in datacopy:
 		if entry[conditionName]==conditionValue:
 			if eraseAfter:
 				if entry.has(conditionName):
@@ -59,6 +57,9 @@ func sortByDifficulty(data: Variant) -> Variant:
 ## @returns: Variant - The spawn data in correct order.
 func getLevelWords(levelID:int,randomness:int=5)->Variant:
 	var levelWords=[]
+	if rawdata==null:
+		rawdata=loadDatabaseData()
+	# Note, this loads teh database data again each time a level is loaded and is very inefficient - but writing it into a variable breaks it.
 	var workData = filterJson(rawdata,"level",levelID,true)
 	workData=sortByDifficulty(workData)
 	# Load the words in ascending difficulty into the levelWords array with some randomness

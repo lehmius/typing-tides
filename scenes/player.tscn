@@ -70,7 +70,7 @@ script = ExtResource("1_g2els")
 position = Vector2(1, 7)
 sprite_frames = SubResource("SpriteFrames_g2els")
 animation = &"player"
-frame_progress = 0.86508
+frame_progress = 0.851889
 
 [node name="Area2D" type="Area2D" parent="."]
 

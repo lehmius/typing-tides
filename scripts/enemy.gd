@@ -17,7 +17,7 @@ var bobFrequency: float = 2.0		# Frequency of the bobbing motion
 var bobAmplitude: float = 4.0			# Amplitude of the bobbing motion
 var direction: Vector2 = Vector2(0,0)# Vector from position to target, updated when any move function is called
 @onready var visualSprite:AnimatedSprite2D = $AnimatedSprite2D
-@onready var Player:Node			# Holds a reference to the Player.
+@onready var Player					# Holds a reference to the Player.
 @onready var errorAnimationPlayer:AnimationPlayer = $AnimationPlayer
 var time:float = 0.0 				# Elapsed time since node was instantiated
 var timeToKill:float = 0.0			# Elapsed time since the node has been first attacked
