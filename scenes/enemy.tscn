@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://yosam1ddg85l"]
+[gd_scene load_steps=8 format=3 uid="uid://yosam1ddg85l"]
 
 [ext_resource type="Script" uid="uid://djx0sxuemepaw" path="res://scripts/enemy.gd" id="1_md0e3"]
 [ext_resource type="SpriteFrames" uid="uid://bvdpyqovplr5d" path="res://Resources/enemy_spriteFrames.tres" id="2_md0e3"]
+[ext_resource type="FontFile" uid="uid://84a50x0xbb02" path="res://assets/fonts/Pixelscapes.ttf" id="3_4ra3w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c4w8v"]
 radius = 19.0263
@@ -60,11 +61,12 @@ anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -27.765
 offset_top = 15.0
-offset_right = 28.235
+offset_right = 40.235
 offset_bottom = 38.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_4ra3w")
 text = "default"
 horizontal_alignment = 1
 
