@@ -247,6 +247,7 @@ func emitPlayerPerformanceMetrics() -> void:
 ##
 ## @returns: void
 func handleLevelOver() -> void:
+	SignalBus.levelOver.emit()
 	var popup = levelover_popup.instantiate()
 	add_child(popup)
 	emitPlayerPerformanceMetrics()
