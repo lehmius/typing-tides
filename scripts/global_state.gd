@@ -11,3 +11,9 @@ func setPaused() -> void:
 func setUpaused() -> void:
 	isPaused=false
 	Engine.set_time_scale(1)
+
+func getLevelID() -> int:
+	return levelID
+
+func setLevelID(id: int) -> void:
+	levelID = id
