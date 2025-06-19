@@ -5,7 +5,7 @@ extends Control
 
 func _ready() -> void:
 	restart_button.set_levelID_to_current()
-	menu_button.set_scene_to_be_loaded(-2)
+	menu_button.set_scene_to_be_loaded(-3)
 	SignalBus.deleteMenus.connect(deleteSelf)
 	
 ## Deletes popup
