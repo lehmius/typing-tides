@@ -10,6 +10,6 @@ func _ready() -> void:
 ## @returns: void
 func onButtonPressed(button: Button) ->void:
 	var buttonName = str(button.name)
-	var levelIDToSet = int(buttonName[buttonName.length()-1])
+	var levelIDToSet = int(buttonName.lstrip("Button"))
 	SignalBus.loadLevel.emit(levelIDToSet)
 	queue_free()
