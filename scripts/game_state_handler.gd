@@ -310,15 +310,16 @@ Occupied levelIDs:
 ##
 ## @returns: void
 func loadLevel(levelID:int) -> void:
-	GlobalState.levelID=levelID
+	GlobalState.setLevelID(levelID)
 	#Cleanup
+	
 	for child in get_children():
 		if child != player and child != enemySpawnTimer:
 			child.queue_free()
 	enemiesToSpawn=null
 	enemyReferences=[]
 	resetPerformanceMetrics()
-	
+		
 	# Loads words into enemiesToSpawn
 	spawnEnemies(DataLoader.getLevelWords(-1))	
 	
@@ -328,7 +329,7 @@ func loadLevel(levelID:int) -> void:
 	var backgroundIMG:Texture2D
 	var scene:PackedScene
 	
-	match levelID:
+	match GlobalState.getLevelID():
 		-4:
 			scene = load("res://scenes/welcome_splash_screen.tscn")
 		-3:
