@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duonw8rod1fqh"
-path="res://.godot/imported/EndlessOrLevel.png-abeb3fc2ac6ea55c1814f348f01d9c5c.ctex"
+uid="uid://du4unlg67tqcu"
+path="res://.godot/imported/endless_loop.png-aaaf7e4029d804471d7a407972cd85a5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/levels/menu_screens/EndlessOrLevel.png"
-dest_files=["res://.godot/imported/EndlessOrLevel.png-abeb3fc2ac6ea55c1814f348f01d9c5c.ctex"]
+source_file="res://assets/levels/background/endless_loop.png"
+dest_files=["res://.godot/imported/endless_loop.png-aaaf7e4029d804471d7a407972cd85a5.ctex"]
 
 [params]
 
