@@ -1,0 +1,80 @@
+[gd_scene load_steps=3 format=3 uid="uid://beifew10nwrqb"]
+
+[ext_resource type="Texture2D" uid="uid://d2hxgnukrh2jl" path="res://assets/levels/menu_screens/LevelSelection.png" id="1_3shnc"]
+[ext_resource type="Script" uid="uid://ofwl2cytcox0" path="res://scripts/level_select.gd" id="1_p0wlc"]
+
+[node name="LevelSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p0wlc")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_3shnc")
+
+[node name="ButtonContainer" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button1" type="Button" parent="ButtonContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 28.0
+offset_top = 40.0
+offset_right = 156.0
+offset_bottom = 137.0
+
+[node name="Button2" type="Button" parent="ButtonContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 180.0
+offset_top = 40.0
+offset_right = 308.0
+offset_bottom = 137.0
+
+[node name="Button3" type="Button" parent="ButtonContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 332.0
+offset_top = 40.0
+offset_right = 460.0
+offset_bottom = 137.0
+
+[node name="Button4" type="Button" parent="ButtonContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 484.0
+offset_top = 40.0
+offset_right = 612.0
+offset_bottom = 137.0
+
+[node name="Button5" type="Button" parent="ButtonContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 28.0
+offset_top = 223.0
+offset_right = 156.0
+offset_bottom = 320.0
+
+[node name="Button6" type="Button" parent="ButtonContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 180.0
+offset_top = 223.0
+offset_right = 308.0
+offset_bottom = 320.0
+
+[node name="Button7" type="Button" parent="ButtonContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 332.0
+offset_top = 223.0
+offset_right = 460.0
+offset_bottom = 320.0

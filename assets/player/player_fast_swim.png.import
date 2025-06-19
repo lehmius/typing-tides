@@ -2,17 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duonw8rod1fqh"
-
-path="res://.godot/imported/EndlessOrLevel.png-abeb3fc2ac6ea55c1814f348f01d9c5c.ctex"
+uid="uid://c5a1xncjfp74q"
+path="res://.godot/imported/player_fast_swim.png-dcb5194999d0e8a05768435dd7c4ad2b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/levels/menu_screens/EndlessOrLevel.png"
-dest_files=["res://.godot/imported/EndlessOrLevel.png-abeb3fc2ac6ea55c1814f348f01d9c5c.ctex"]
+source_file="res://assets/player/player_fast_swim.png"
+dest_files=["res://.godot/imported/player_fast_swim.png-dcb5194999d0e8a05768435dd7c4ad2b.ctex"]
 
 [params]
 
