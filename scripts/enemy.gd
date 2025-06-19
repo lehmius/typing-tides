@@ -29,7 +29,8 @@ signal enemyDied(enemyInstance:Enemy,score:float,timeToKill:float)
 func _ready() -> void:
 	updateState()
 	setBobbingDynamics()
-	set_animation("idle")
+	var animation_names = visualSprite.sprite_frames.get_animation_names()
+	set_animation(animation_names[randi_range(0, len(animation_names)-1)])
 
 func _physics_process(delta: float) -> void:
 	if not GlobalState.isPaused:

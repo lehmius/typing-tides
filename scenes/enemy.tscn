@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://yosam1ddg85l"]
 
 [ext_resource type="Script" uid="uid://djx0sxuemepaw" path="res://scripts/enemy.gd" id="1_md0e3"]
-[ext_resource type="SpriteFrames" uid="uid://bvdpyqovplr5d" path="res://Resources/enemy_01.tres" id="2_md0e3"]
+[ext_resource type="SpriteFrames" uid="uid://bvdpyqovplr5d" path="res://Resources/enemy_spriteFrames.tres" id="2_md0e3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c4w8v"]
 radius = 19.0263
@@ -48,7 +48,8 @@ script = ExtResource("1_md0e3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_md0e3")
-animation = &"idle"
+animation = &"fish-blue"
+frame_progress = 0.388414
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_c4w8v")
