@@ -363,6 +363,9 @@ func loadLevel(levelID:int) -> void:
 		backgroundNode.texture=backgroundIMG
 		backgroundNode.z_index=-5		#otherwise background gets drawn over scene
 		add_child(backgroundNode)
+	elif levelID==0:
+		#TODO Instantiate Endlessrunner background
+		pass
 	
 	# Set variables if the level is not a menu or meta level
 	if levelID>=-1:
