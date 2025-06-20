@@ -320,7 +320,7 @@ func loadLevel(levelID:int) -> void:
 	resetPerformanceMetrics()
 		
 	# Loads words into enemiesToSpawn
-	spawnEnemies(DataLoader.getLevelWords(-1))	
+	spawnEnemies(DataLoader.getLevelWords(GlobalState.levelID))	
 	
 	# Load animations and backgrounds
 
