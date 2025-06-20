@@ -320,8 +320,7 @@ func loadLevel(levelID:int) -> void:
 	enemiesToSpawn=null
 	enemyReferences=[]
 	resetPerformanceMetrics()
-		
-	
+
 	
 	# Load animations and backgrounds
 
