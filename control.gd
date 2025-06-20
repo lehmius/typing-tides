@@ -9,7 +9,6 @@ var textureHeight=1280
 var textureWidth=640
 
 var maxOffset=1280-360		# Maximum offset before the end of the image becomes visible
-var safetyOffset=50			# Safety offset to guarantee instancing happens offcamera
 var scrollingBGTexture=load("res://assets/levels/background/endless_loop.png")
 
 # Instances backgrounds as needed to give permanent scrolling effect
