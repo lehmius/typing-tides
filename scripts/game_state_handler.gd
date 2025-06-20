@@ -101,6 +101,8 @@ func getEnemyAnimations(levelID:int,enemySprite:AnimatedSprite2D) -> String:
 	var candidates:Array[String] = []
 	var animationData:PackedStringArray=[]
 	animationData = enemySprite.sprite_frames.get_animation_names()
+	if levelID==0:
+		return animationData[randi_range(0,animationData.size()-1)]
 	for entry in animationData:
 		var data = entry.split("-")
 		if data.size()==3:
@@ -319,8 +321,7 @@ func loadLevel(levelID:int) -> void:
 	enemyReferences=[]
 	resetPerformanceMetrics()
 		
-	# Loads words into enemiesToSpawn
-	spawnEnemies(DataLoader.getLevelWords(GlobalState.levelID))	
+	
 	
 	# Load animations and backgrounds
 
@@ -359,13 +360,18 @@ func loadLevel(levelID:int) -> void:
 	if levelID<-1:
 		add_child(scene.instantiate())
 	elif levelID>-1:
+		# For endless mode; currently just levels in order. TODO: More randomness
+		if levelID==0:
+			var data = []
+			for i in range(5,8):		# Use words from levels 5-8
+				data+=DataLoader.getLevelWords(i)
+			spawnEnemies(data)
+		else:
+			spawnEnemies(DataLoader.getLevelWords(GlobalState.levelID))	
 		backgroundNode = TextureRect.new()
 		backgroundNode.texture=backgroundIMG
 		backgroundNode.z_index=-5		#otherwise background gets drawn over scene
 		add_child(backgroundNode)
-	elif levelID==0:
-		#TODO Instantiate Endlessrunner background
-		pass
 	
 	# Set variables if the level is not a menu or meta level
 	if levelID>=-1:
