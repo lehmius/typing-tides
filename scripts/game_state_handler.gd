@@ -340,8 +340,7 @@ func loadLevel(levelID:int) -> void:
 			# Debug/ No longer needed
 			pass
 		0:
-			# Endless runner TODO
-			pass
+			scene = load("res://scenes/EndlessBG.tscn")
 		1:
 			backgroundIMG = load("res://assets/levels/background/level_1.png")
 		2: 
@@ -362,6 +361,7 @@ func loadLevel(levelID:int) -> void:
 	elif levelID>-1:
 		# For endless mode; currently just levels in order. TODO: More randomness
 		if levelID==0:
+			add_child(scene.instantiate())	# Add background for endlessa
 			var data = []
 			for i in range(5,8):		# Use words from levels 5-8
 				data+=DataLoader.getLevelWords(i)
