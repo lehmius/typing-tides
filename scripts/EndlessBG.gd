@@ -22,13 +22,13 @@ func _physics_process(delta: float) -> void:
 		backgrounds.remove_at(0)
 
 
-
 ## Creates a new background instance
 ##
 ## @returns: Reference to TextureRectNode
 func createNewBackground(yposition=0):
 	var backgroundRect = TextureRect.new()
 	backgroundRect.texture=scrollingBGTexture
+	backgroundRect.z_index=-50
 	add_child(backgroundRect)
 	backgroundRect.position.y=yposition
 	return backgroundRect
