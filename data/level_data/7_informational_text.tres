@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://bbteg0rxhqk8p"]
+
+[ext_resource type="Script" uid="uid://cm7gc1lxtalgf" path="res://data/level_data/level_data.gd" id="1_j68dh"]
+
+[resource]
+script = ExtResource("1_j68dh")
+text = "Jetzt kennst du alle Buchstaben auf der Tastatur (bis auf ß) – sehr gut!
+
+Für fortgeschrittene Aufgaben wirst du [bold]manchmal auch Zahlen brauchen[/bold].
+Wenn du viele Zahlen tippen musst (z. B. bei Berechnungen), ist das [bold]Nummernfeld rechts hilfreich[/bold] – falls deine Tastatur eines hat.
+
+In vielen Texten brauchst du aber nur einzelne Zahlen. Diese findest du ganz oben auf der Tastatur.
+
+Um sie zu tippen, musst du deine Finger noch ein Stück weiter nach oben bewegen.
+
+Das ß ist eines der selteneren Buchstaben und hat nur noch bei den Zahlen Platz gefunden auch das wirst du in diesem Level lernen.
+
+<<Falls mit Sonderzeichen >>
+Hier gibt es auch noch zwei Sonderzeichen: das Hochstellzeichen ^ und das Gravis ´ für weitere Akzente die häufig im Französischen oder Griechischen vorkommen. Wenn du Wörter aus den Sprachen verwenden möchtest, wirst du nicht um dieses Zeichen herumkommen.
+
+Legen wir los mit Level 7!
+
+<<Bild mit der Tastatur, in der die oberste Reihe hervorgehoben und die zuvor gelernten Tasten beschriftet sind.>>
+"
+metadata/_custom_type_script = "uid://cm7gc1lxtalgf"

@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://dulb5sl4oigyq"]
+
+[ext_resource type="Script" uid="uid://cm7gc1lxtalgf" path="res://data/level_data/level_data.gd" id="1_ktrxj"]
+
+[resource]
+script = ExtResource("1_ktrxj")
+text = "Du hast jetzt schon viele Buchstaben gelernt – sowohl in Klein- als auch in Großschreibung.
+Jetzt fehlen nur noch die [bold]Großbuchstaben der unteren Buchstabenreihe[/bold].
+
+Das Prinzip kennst du schon aus den vorherigen Levels:
+Um Großbuchstaben zu schreiben, drückst du die Umschalt-Taste (Shift) und gleichzeitig den gewünschten Buchstaben.
+
+Da du nun ganz unten auf der Tastatur arbeitest, musst du deine Finger besonders gezielt einsetzen.
+Auch hier gilt wieder: [bold]Die Umschalttaste drückst du mit der jeweils anderen Hand als die Buchstabentaste.[/bold]
+
+Das klappt bestimmt!
+Versuch, dich ganz auf die Bewegung zu konzentrieren – bald wird sie ganz von allein passieren.
+
+>>Falls Doppeltpunkt und Semikolon dabei sind:<<
+In der unteren Reihe findest du auch den Doppeltpunkt und das Semikolon.
+<<Falls mit Sonderzeichen >>
+Auch Größer- Kleiner Zeichen > und der Unterstrich _ findest du hier. Auch diese wirst du seltener verwenden aber je nach dem was du machst, benötigst du auch diese.
+
+<<Bild mit der Tastatur, in der die untere Reihe hervorgehoben ist und die gelernten Tasten beschriftet sind.>>
+"
+metadata/_custom_type_script = "uid://cm7gc1lxtalgf"

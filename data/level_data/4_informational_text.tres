@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://dvm1nvu0knqio"]
+
+[ext_resource type="Script" uid="uid://cm7gc1lxtalgf" path="res://data/level_data/level_data.gd" id="1_q5clr"]
+
+[resource]
+script = ExtResource("1_q5clr")
+text = "Wow – mehr als die Hälfte der Buchstaben hast du jetzt schon gelernt, zumindest die kleingeschriebenen.
+ 
+Jetzt lernst du die Großbuchstaben der oberen Reihe.
+Wie schon im 2. Level benutzt du dafür die Umschalttaste.
+ 
+Auch hier gilt: [bold]Drücke die Umschalttaste mit der anderen Hand als die Buchstabentaste.[/bold]
+ 
+Das sind jetzt schon ganz schön viele Buchstaben, die du gelernt hast.
+[bold]Nimm dir hier gern eine Pause.[/bold]
+ 
+Wenn du weitermachst, [bold]lass dir Zeit – es ist wichtiger, dass du konzentriert bleibst und den richtigen Buchstaben tippst,[/bold] 
+als jetzt schon super schnell schreiben zu können."
+metadata/_custom_type_script = "uid://cm7gc1lxtalgf"
