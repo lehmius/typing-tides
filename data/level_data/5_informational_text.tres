@@ -4,8 +4,10 @@
 
 [resource]
 script = ExtResource("1_4xooo")
-text = "Sehr gut! [bold]Jetzt fehlen nur noch ein paar Buchstaben[/bold] – die aus der unteren Reihe.
-[center]Yxcvb nm(,.)[/center]
+text = "Sehr gut! Jetzt fehlen nur noch ein paar Buchstaben – die aus der unteren Reihe.
+
+[center][img]res://assets/levels/menu_screens/5-tastatur.png[/img][/center]
+
 Da du schon die obere Reihe kennst, trauen wir dir zu, dass du diese Reihe selbstständig meisterst.
  
 << wenn mit Leerzeichen.>>
@@ -19,6 +21,5 @@ Oh, fast vergessen – in der unteren Reihe findest du auch den Punkt und das Ko
  
 Das schaffst du bestimmt auch!
  
-[center][img]res://assets/levels/menu_screens/5-tastatur.png[/img][/center]
 "
 metadata/_custom_type_script = "uid://cm7gc1lxtalgf"
