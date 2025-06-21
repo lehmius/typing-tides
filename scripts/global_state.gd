@@ -8,6 +8,7 @@ var seenModeSelectPopup: bool = false
 
 var playProjectileSound: bool = true
 var playSpawnSound: bool = true
+var playEnemyDeathSounds: bool = true
 
 
 

@@ -19,3 +19,4 @@ signal playError
 signal playEndless
 signal playLevel
 signal spawnEnemy
+signal enemyDeath

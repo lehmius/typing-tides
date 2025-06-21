@@ -89,7 +89,9 @@ func takeDamage() -> void:
 	text=text.substr(1,text.length())
 	if text.length()==0:
 		death()
-	SignalBus.playHit.emit() #Note: No differentiation between hit and death so far
+		SignalBus.enemyDeath.emit()
+	else:
+		SignalBus.playHit.emit() #Note: No differentiation between hit and death so far
 	updateState()
 
 ## Handler method for if the enemy runs out of letters, simulating a "death".
