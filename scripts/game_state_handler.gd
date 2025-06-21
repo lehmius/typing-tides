@@ -21,6 +21,7 @@ var wordCorrectLetters:int=0			# Tracking per word correct letters
 var time:float=0.0						# Time since starting the level
 var enemySpawnTimerDuration:float = 3	# Time for the enemy Spawn timer, dynamically changes based on player performance
 var lastTTK:float=enemySpawnTimerDuration# Time to kill the last enemy, can't be given in method as it's also connected to a signal and connection fails with more arguments
+var endscreenExists:bool=false			# Variable that prevents double popups from appearing (which can happen very rarely if win and lose condition are triggered on the same frame.
 
 # The following are reference variables.
 var enemyReferences:Array[Enemy] = []	# Holds references to each currently instanced enemy
@@ -278,10 +279,12 @@ func emitPlayerPerformanceMetrics() -> void:
 ##
 ## @returns: void
 func handleLevelOver() -> void:
-	var popup = levelover_popup.instantiate()
-	add_child(popup)
-	emitPlayerPerformanceMetrics()
-	GlobalState.isPaused = true
+	if !endscreenExists:
+		var popup = levelover_popup.instantiate()
+		add_child(popup)
+		emitPlayerPerformanceMetrics()
+		GlobalState.isPaused = true
+		endscreenExists=true
 
 ## Helper function to trigger when the level is over as the player has been hit. 
 ##
@@ -289,10 +292,12 @@ func handleLevelOver() -> void:
 func gameOverTriggered() -> void:
 	print("Your final score is:",score)
 	print("GAME OVER")
-	var popup = gameover_popup.instantiate()
-	add_child(popup)
-	emitPlayerPerformanceMetrics()
-	GlobalState.isPaused=true
+	if !endscreenExists:
+		var popup = gameover_popup.instantiate()
+		add_child(popup)
+		emitPlayerPerformanceMetrics()
+		GlobalState.isPaused=true
+		endscreenExists=true
 
 ## Returns the ID of the current level.
 ##
@@ -313,8 +318,8 @@ Occupied levelIDs:
 ## @returns: void
 func loadLevel(levelID:int) -> void:
 	GlobalState.setLevelID(levelID)
+	endscreenExists=false
 	#Cleanup
-	
 	for child in get_children():
 		if child != player and child != enemySpawnTimer:
 			child.queue_free()
