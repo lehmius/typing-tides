@@ -7,6 +7,11 @@ extends Control
 
 func _ready() -> void:
 	GlobalState.setPaused()
+	close_button.mouse_entered.connect(hoverSound)
+
+
+func hoverSound() -> void:
+	SignalBus.buttonHover.emit()
 	
 func _on_button_button_down() -> void:
 	GlobalState.setUpaused()

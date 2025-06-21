@@ -11,3 +11,9 @@ func _ready() -> void:
 	restart_button.set_levelID_to_current()
 	menu_button.set_scene_to_be_loaded(-3)
 	next_level_button.set_scene_to_be_loaded(int(GameStateHandler.getCurrentLevel()+1))
+	restart_button.mouse_entered.connect(hoverSound)
+	menu_button.mouse_entered.connect(hoverSound)
+	next_level_button.mouse_entered.connect(hoverSound)
+
+func hoverSound() -> void:
+	SignalBus.buttonHover.emit()
