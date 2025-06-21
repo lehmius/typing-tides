@@ -34,6 +34,7 @@ var playerScene: PackedScene = preload("res://scenes/player.tscn")
 var enemyScene: PackedScene = preload("res://scenes/enemy.tscn")
 var gameover_popup: PackedScene = preload("res://scenes/gameover_popup.tscn")
 var levelover_popup: PackedScene = preload("res://scenes/levelover_popup.tscn")
+var informational_popup: PackedScene = preload("res://scenes/informational_popup.tscn")
 
 enum inputType{VALID,INVALID}
 
@@ -373,6 +374,12 @@ func loadLevel(levelID:int) -> void:
 		enemySpawnTimer.start()
 		player.visible=true
 		GlobalState.setUpaused()
+	
+	if levelID > 0:
+		var popup = informational_popup.instantiate()
+		popup.info = load("res://data/level_data/%s_informational_text.tres" % str(levelID))
+		add_child(popup)
+		
 
 
 ## Start spawning the enemies of a levelData list based on time or player destroying last enemy 
