@@ -361,12 +361,14 @@ func loadLevel(levelID:int) -> void:
 	elif levelID>-1:
 		# For endless mode; currently just levels in order. TODO: More randomness
 		if levelID==0:
+			SignalBus.playEndless.emit()
 			add_child(scene.instantiate())	# Add background for endlessaa
 			var data = []
 			for i in range(5,8):		# Use words from levels 5-8
 				data+=DataLoader.getLevelWords(i)
 			spawnEnemies(data)
 		else:
+			SignalBus.playLevel.emit()
 			spawnEnemies(DataLoader.getLevelWords(GlobalState.levelID))	
 		backgroundNode = TextureRect.new()
 		backgroundNode.texture=backgroundIMG
@@ -407,7 +409,9 @@ func spawnEnemies(levelData:Variant) -> void:
 func spawnNextEnemy() -> void:
 	if GlobalState.levelID>-1:
 		var endlessEndgamePoolSize:int=40		# The size at which the endless mode no longer removes entries once spawned.
-		if enemiesToSpawn.size()!=0: instanceEnemy(enemiesToSpawn[0])
+		if enemiesToSpawn.size()!=0: 
+			SignalBus.spawnEnemy.emit()
+			instanceEnemy(enemiesToSpawn[0])
 		if GlobalState.levelID!=0 or (enemiesToSpawn.size()>endlessEndgamePoolSize):
 			enemiesToSpawn.remove_at(0)
 		enemySpawnTimer.stop()

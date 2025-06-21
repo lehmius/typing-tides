@@ -89,6 +89,9 @@ func takeDamage() -> void:
 	text=text.substr(1,text.length())
 	if text.length()==0:
 		death()
+		SignalBus.enemyDeath.emit()
+	else:
+		SignalBus.playHit.emit() #Note: No differentiation between hit and death so far
 	updateState()
 
 ## Handler method for if the enemy runs out of letters, simulating a "death".
@@ -111,3 +114,4 @@ func attemptHit(letter:String) -> void:
 	else:
 		# If the attempted Hit is not correct, play an error shake, acting upon the Label.
 		errorAnimationPlayer.play("ErrorShake(Vertical)")
+		SignalBus.playError.emit()

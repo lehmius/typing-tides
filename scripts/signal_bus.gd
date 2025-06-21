@@ -12,3 +12,13 @@ signal displayPerformance # Display the player performance metrics and endscreen
 signal loadLevel # Signals that a new level should be loaded.
 signal fetchLevelData # Tells the dataLoader to fetch the signal data.
 signal deleteMenus	# Deletes all popups/menus
+
+# Audio signals
+signal playHit
+signal playError
+signal playEndless
+signal playLevel
+signal spawnEnemy
+signal enemyDeath
+signal playWelcome
+signal buttonHover

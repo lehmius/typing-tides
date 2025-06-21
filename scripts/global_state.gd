@@ -5,6 +5,15 @@ var language="deutsch" # Possible Values: deutsch, english
 var levelID:int=-4
 var seenModeSelectPopup: bool = false
 
+
+var playProjectileSound: bool = true
+var playSpawnSound: bool = true
+var playEnemyDeathSounds: bool = true
+var buttonHoverSound: bool = true
+var playErrorSound: bool = true
+
+
+
 func setPaused() -> void:
 	isPaused=true
 	Engine.set_time_scale(0)

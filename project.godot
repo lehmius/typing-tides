@@ -21,6 +21,7 @@ SignalBus="*res://scripts/signal_bus.gd"
 GameStateHandler="*res://scripts/game_state_handler.gd"
 GlobalState="*res://scripts/global_state.gd"
 DataLoader="*res://scripts/data_loader.gd"
+AudioPlayer="*res://scenes/audio_player.tscn"
 
 [display]
 
