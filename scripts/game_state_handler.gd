@@ -361,12 +361,14 @@ func loadLevel(levelID:int) -> void:
 	elif levelID>-1:
 		# For endless mode; currently just levels in order. TODO: More randomness
 		if levelID==0:
+			SignalBus.playEndless.emit()
 			add_child(scene.instantiate())	# Add background for endlessaa
 			var data = []
 			for i in range(5,8):		# Use words from levels 5-8
 				data+=DataLoader.getLevelWords(i)
 			spawnEnemies(data)
 		else:
+			SignalBus.playLevel.emit()
 			spawnEnemies(DataLoader.getLevelWords(GlobalState.levelID))	
 		backgroundNode = TextureRect.new()
 		backgroundNode.texture=backgroundIMG
