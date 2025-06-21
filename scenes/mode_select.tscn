@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dorm7t51ukd3j"]
+[gd_scene load_steps=3 format=3 uid="uid://dorm7t51ukd3j"]
 
 [ext_resource type="Texture2D" uid="uid://duonw8rod1fqh" path="res://assets/levels/menu_screens/EndlessOrLevel.png" id="1_pskx3"]
 [ext_resource type="Script" uid="uid://cudj1yqtob6bb" path="res://scripts/mode_select.gd" id="1_ydsjw"]
-[ext_resource type="PackedScene" uid="uid://gfm542q4hb66" path="res://scenes/informational_popup.tscn" id="2_eccxc"]
-[ext_resource type="Resource" uid="uid://dcfn0jn00074b" path="res://data/level_data/0-1_informational_text.tres" id="3_q6xnb"]
 
 [node name="ModeSelect" type="Control"]
 layout_mode = 3
@@ -41,7 +39,3 @@ text = "Prüfe deine Fähigkeiten
 in einem Endless-Runner"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="InformationalPopup" parent="." instance=ExtResource("2_eccxc")]
-layout_mode = 1
-info = ExtResource("3_q6xnb")

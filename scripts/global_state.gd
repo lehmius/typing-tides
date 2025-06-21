@@ -3,6 +3,7 @@ extends Node
 var isPaused:bool=false
 var language="deutsch" # Possible Values: deutsch, english
 var levelID:int=-4
+var seenModeSelectPopup: bool = false
 
 func setPaused() -> void:
 	isPaused=true
@@ -17,3 +18,9 @@ func getLevelID() -> int:
 
 func setLevelID(id: int) -> void:
 	levelID = id
+
+func getSeenModeSelectPopup() -> bool:
+	return seenModeSelectPopup
+
+func flipSeenModeSelectPopup() -> void:
+	seenModeSelectPopup = !seenModeSelectPopup
