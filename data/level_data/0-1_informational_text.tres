@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://dcfn0jn00074b"]
+
+[ext_resource type="Script" uid="uid://cm7gc1lxtalgf" path="res://data/level_data/level_data.gd" id="1_2r2c0"]
+
+[resource]
+script = ExtResource("1_2r2c0")
+text = "Hi!
+Schön, dass du da bist und mit uns das 10-Finger-Schreiben lernen möchtest.
+Wir sind ein Forschungslabor, das sich auf Lebewesen im Wasser spezialisiert hat. Vielleicht können wir uns gegenseitig helfen: Wir brauchen jemanden, der Fische für unseren Katalog scannt – und du lernst dabei das Tippen!
+ 
+Sicherlich kennst du schon eine Tastatur und hast sie oft benutzt. Jetzt zeigen wir dir ein paar Tipps, wie du sie noch besser bedienen kannst."
+metadata/_custom_type_script = "uid://cm7gc1lxtalgf"
