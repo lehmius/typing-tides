@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bkb2d7senllgm"]
+[gd_scene load_steps=4 format=3 uid="uid://bkb2d7senllgm"]
 
 [ext_resource type="Script" uid="uid://cikus2vrw26ci" path="res://scripts/popup.gd" id="1_4ebxx"]
 [ext_resource type="PackedScene" uid="uid://eks7rlb74et5" path="res://scenes/pause_component.tscn" id="3_gxv0h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cpc1a"]
+bg_color = Color(0.141176, 0.141176, 0.141176, 0.756863)
 
 [node name="Popup" type="Control"]
 custom_minimum_size = Vector2(640, 360)
@@ -22,6 +25,7 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = -10.0
 offset_bottom = -10.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_cpc1a")
 
 [node name="Button" type="Button" parent="Panel"]
 layout_mode = 1
