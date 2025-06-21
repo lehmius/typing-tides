@@ -21,3 +21,4 @@ signal playLevel
 signal spawnEnemy
 signal enemyDeath
 signal playWelcome
+signal buttonHover

@@ -20,11 +20,15 @@ func _ready() -> void:
 	SignalBus.spawnEnemy.connect(playSpawn)
 	SignalBus.enemyDeath.connect(playEnemyDeath)
 	SignalBus.playWelcome.connect(playWelcomeMusic)
+	SignalBus.buttonHover.connect(playHover)
 	# Load assets
+	# Audio Streams
 	AudioStreams["endless"]=preload("res://assets/sounds/soundtrack/atmosphere-of-atlantis-246389.mp3")
 	AudioStreams["level"]=preload("res://assets/sounds/soundtrack/deep-in-the-ocean-116172.mp3")
 	AudioStreams["error"]=preload("res://assets/sounds/soundFX/short-beep-tone-47916.mp3")
 	AudioStreams["welcome"]=preload("res://assets/sounds/soundtrack/soul-of-the-underwater-kingdom-248171.mp3")
+	AudioStreams["hover"]=preload("res://assets/sounds/menu_sounds/hover-button-287656.mp3")
+	# Sound Streams
 	SoundStreams["spawn"]=preload("res://assets/sounds/soundFX/bubbles-03-91268.mp3")
 	SoundStreams["projectile"]=preload("res://assets/sounds/soundFX/8-bit-game-sfx-sound-6-269965.mp3")
 	SoundStreams["enemyDeath"]=preload("res://assets/sounds/soundFX/death2-340040.mp3")
@@ -37,6 +41,9 @@ func _ready() -> void:
 	# This is a slightly hacky workaround - calling this in welcomesplashscreen may send signal 
 	# before it is connected. This ensures it is connected and sends signal when the game is run
 	SignalBus.playWelcome.emit()
+
+func playHover() -> void:
+	AudioPlayers["hover"].play()
 
 func playWelcomeMusic() -> void:
 	print("receiving emission")
