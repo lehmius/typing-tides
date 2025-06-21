@@ -18,3 +18,4 @@ signal playHit
 signal playError
 signal playEndless
 signal playLevel
+signal spawnEnemy

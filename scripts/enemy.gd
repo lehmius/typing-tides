@@ -111,3 +111,4 @@ func attemptHit(letter:String) -> void:
 	else:
 		# If the attempted Hit is not correct, play an error shake, acting upon the Label.
 		errorAnimationPlayer.play("ErrorShake(Vertical)")
+		SignalBus.playError.emit()
