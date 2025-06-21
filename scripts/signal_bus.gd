@@ -20,3 +20,4 @@ signal playEndless
 signal playLevel
 signal spawnEnemy
 signal enemyDeath
+signal playWelcome

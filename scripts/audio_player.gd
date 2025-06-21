@@ -7,6 +7,8 @@ var enemySpawnSounds = []
 var projectileSounds = []
 var enemyDeathSounds = []
 
+var welcomeMusicHasBeenPlayedBefore:bool = false
+
 
 
 func _ready() -> void:
@@ -17,10 +19,12 @@ func _ready() -> void:
 	SignalBus.playLevel.connect(playLevel)
 	SignalBus.spawnEnemy.connect(playSpawn)
 	SignalBus.enemyDeath.connect(playEnemyDeath)
+	SignalBus.playWelcome.connect(playWelcomeMusic)
 	# Load assets
 	AudioStreams["endless"]=preload("res://assets/sounds/soundtrack/atmosphere-of-atlantis-246389.mp3")
 	AudioStreams["level"]=preload("res://assets/sounds/soundtrack/deep-in-the-ocean-116172.mp3")
 	AudioStreams["error"]=preload("res://assets/sounds/soundFX/short-beep-tone-47916.mp3")
+	AudioStreams["welcome"]=preload("res://assets/sounds/soundtrack/soul-of-the-underwater-kingdom-248171.mp3")
 	SoundStreams["spawn"]=preload("res://assets/sounds/soundFX/bubbles-03-91268.mp3")
 	SoundStreams["projectile"]=preload("res://assets/sounds/soundFX/8-bit-game-sfx-sound-6-269965.mp3")
 	SoundStreams["enemyDeath"]=preload("res://assets/sounds/soundFX/death2-340040.mp3")
@@ -29,6 +33,19 @@ func _ready() -> void:
 		AudioPlayers[entry] = AudioStreamPlayer.new()
 		AudioPlayers[entry].stream=AudioStreams[entry]
 		add_child(AudioPlayers[entry])
+	
+	# This is a slightly hacky workaround - calling this in welcomesplashscreen may send signal 
+	# before it is connected. This ensures it is connected and sends signal when the game is run
+	SignalBus.playWelcome.emit()
+
+func playWelcomeMusic() -> void:
+	print("receiving emission")
+	if !welcomeMusicHasBeenPlayedBefore:
+		# These stop signals should never be relevant but are added for redundancy
+		AudioPlayers["level"].stop()
+		AudioPlayers["endless"].stop()
+		AudioPlayers["welcome"].play()
+		welcomeMusicHasBeenPlayedBefore=true
 
 func playEnemyDeath() -> void:
 	instanceOverlappingSound("enemyDeath",GlobalState.playEnemyDeathSounds,enemyDeathSounds)
@@ -54,9 +71,11 @@ func instanceOverlappingSound(soundName:String,condition:bool,referenceArray) ->
 		newSoundInstance.play()
 
 func playEndless() -> void:
+	AudioPlayers["welcome"].stop()
 	AudioPlayers["level"].stop()
 	AudioPlayers["endless"].play(0)
 
 func playLevel() -> void:
+	AudioPlayers["welcome"].stop()
 	AudioPlayers["endless"].stop()
 	AudioPlayers["level"].play(0)
