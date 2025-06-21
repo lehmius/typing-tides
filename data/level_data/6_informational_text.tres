@@ -7,6 +7,8 @@ script = ExtResource("1_ktrxj")
 text = "Du hast jetzt schon viele Buchstaben gelernt – sowohl in Klein- als auch in Großschreibung.
 Jetzt fehlen nur noch die Großbuchstaben der unteren Buchstabenreihe.
 
+[center][img]res://assets/levels/menu_screens/6-tastatur.png[/img][/center]
+
 Das Prinzip kennst du schon aus den vorherigen Levels:
 Um Großbuchstaben zu schreiben, drückst du die Umschalt-Taste (Shift) und gleichzeitig den gewünschten Buchstaben.
 
@@ -14,13 +16,5 @@ Da du nun ganz unten auf der Tastatur arbeitest, musst du deine Finger besonders
 Auch hier gilt wieder: Die Umschalttaste drückst du mit der jeweils anderen Hand als die Buchstabentaste.
 
 Das klappt bestimmt!
-Versuch, dich ganz auf die Bewegung zu konzentrieren – bald wird sie ganz von allein passieren.
-
->>Falls Doppeltpunkt und Semikolon dabei sind:<<
-In der unteren Reihe findest du auch den Doppeltpunkt und das Semikolon.
-<<Falls mit Sonderzeichen >>
-Auch Größer- Kleiner Zeichen > und der Unterstrich _ findest du hier. Auch diese wirst du seltener verwenden aber je nach dem was du machst, benötigst du auch diese.
-
-<<Bild mit der Tastatur, in der die untere Reihe hervorgehoben ist und die gelernten Tasten beschriftet sind.>>
-"
+Versuch, dich ganz auf die Bewegung zu konzentrieren – bald wird sie ganz von allein passieren."
 metadata/_custom_type_script = "uid://cm7gc1lxtalgf"
