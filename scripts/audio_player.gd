@@ -43,7 +43,8 @@ func _ready() -> void:
 	SignalBus.playWelcome.emit()
 
 func playHover() -> void:
-	AudioPlayers["hover"].play()
+	if GlobalState.buttonHoverSound:
+		AudioPlayers["hover"].play()
 
 func playWelcomeMusic() -> void:
 	print("receiving emission")
@@ -61,7 +62,8 @@ func playEnemyHit() -> void:
 	instanceOverlappingSound("projectile",GlobalState.playProjectileSound,projectileSounds)
 
 func playError() -> void:
-	AudioPlayers["error"].play()
+	if GlobalState.playErrorSound:
+		AudioPlayers["error"].play()
 
 func playSpawn() -> void:
 	instanceOverlappingSound("spawn",GlobalState.playSpawnSound,enemySpawnSounds)
