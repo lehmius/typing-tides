@@ -55,6 +55,7 @@ func sortByDifficulty(data: Variant) -> Variant:
 ## @param levelID: int - The levelID of the level to get the data for.
 ## @param randomness: int - The part of the array the random value can be chosen from (0..randomness).
 ## @returns: Variant - The spawn data in correct order.
+# TODO: Increase randomness to take value from entire array rather than start
 func getLevelWords(levelID:int,randomness:int=5)->Variant:
 	var levelWords=[]
 	if rawdata==null:
