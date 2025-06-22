@@ -426,6 +426,8 @@ func spawnNextEnemy() -> void:
 			instanceEnemy(enemiesToSpawn[0])
 		if GlobalState.levelID!=0 or (enemiesToSpawn.size()>endlessEndgamePoolSize):
 			enemiesToSpawn.remove_at(0)
+		else:
+			enemiesToSpawn.shuffle()
 		enemySpawnTimer.stop()
 		enemySpawnTimer.wait_time=min(0.95*lastTTK,enemySpawnTimerDuration)
 		enemySpawnTimer.start() # Reset the spawn timer

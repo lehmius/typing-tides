@@ -72,6 +72,8 @@ func getLevelWords(levelID:int,randomness:int=5)->Variant:
 		levelWords.resize(15)
 	elif levelID==2:
 		levelWords.resize(25)
+	elif levelID==0:
+		levelWords.resize(150)
 	else:
 		levelWords.resize(15+5*levelID)
 	return levelWords
