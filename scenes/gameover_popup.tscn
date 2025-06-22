@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://rupxhweosc0b"]
+[gd_scene load_steps=5 format=3 uid="uid://rupxhweosc0b"]
 
 [ext_resource type="PackedScene" uid="uid://bkb2d7senllgm" path="res://scenes/popup.tscn" id="1_cvnvp"]
 [ext_resource type="Script" uid="uid://cm1tn5t6xwrsk" path="res://scripts/gameover_popup.gd" id="1_d1g1p"]
-[ext_resource type="FontFile" uid="uid://84a50x0xbb02" path="res://assets/fonts/Pixelscapes.ttf" id="2_d1g1p"]
 [ext_resource type="PackedScene" uid="uid://bj0dl4fdchtp" path="res://scenes/load_scene_button.tscn" id="4_48pdo"]
 [ext_resource type="PackedScene" uid="uid://bayificl0ex7n" path="res://scripts/score_label.tscn" id="4_knds1"]
 
@@ -39,7 +38,6 @@ theme_override_constants/margin_bottom = 10
 [node name="RichTextLabel" type="RichTextLabel" parent="Popup/VBoxContainer/MarginContainer"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("2_d1g1p")
 bbcode_enabled = true
 text = "GAME OVER"
 scroll_active = false
@@ -66,7 +64,6 @@ theme_override_constants/margin_right = 20
 
 [node name="RestartButton" parent="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer" instance=ExtResource("4_48pdo")]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_d1g1p")
 text = "Nochmal"
 
 [node name="MarginContainer2" type="MarginContainer" parent="Popup/VBoxContainer/CenterContainer/HBoxContainer"]
@@ -75,7 +72,6 @@ theme_override_constants/margin_left = 20
 
 [node name="MenuButton" parent="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer2" instance=ExtResource("4_48pdo")]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_d1g1p")
 text = "Hauptmenü"
 
 [connection signal="button_down" from="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer/RestartButton" to="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer/RestartButton" method="_on_button_down"]

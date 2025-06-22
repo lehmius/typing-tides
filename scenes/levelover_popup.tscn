@@ -38,7 +38,6 @@ theme_override_constants/margin_bottom = 10
 [node name="RichTextLabel" type="RichTextLabel" parent="Popup/VBoxContainer/MarginContainer"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("2_lqygw")
 bbcode_enabled = true
 text = "Juhu! Geschafft!"
 scroll_active = false
@@ -51,7 +50,6 @@ size_flags_vertical = 4
 [node name="ScoreLabel" parent="Popup/VBoxContainer/CenterContainer2" instance=ExtResource("3_rn41j")]
 custom_minimum_size = Vector2(620, 200)
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("2_lqygw")
 vertical_alignment = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="Popup/VBoxContainer"]
@@ -66,7 +64,6 @@ theme_override_constants/margin_right = 20
 
 [node name="RestartButton" parent="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer" instance=ExtResource("4_denbv")]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_lqygw")
 text = "Nochmal"
 
 [node name="MarginContainer2" type="MarginContainer" parent="Popup/VBoxContainer/CenterContainer/HBoxContainer"]
@@ -76,7 +73,6 @@ theme_override_constants/margin_right = 20
 
 [node name="MenuButton" parent="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer2" instance=ExtResource("4_denbv")]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_lqygw")
 text = "Hauptmenü"
 
 [node name="MarginContainer3" type="MarginContainer" parent="Popup/VBoxContainer/CenterContainer/HBoxContainer"]
@@ -86,7 +82,6 @@ theme_override_constants/margin_right = 0
 
 [node name="NextLevelButton" parent="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer3" instance=ExtResource("4_denbv")]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_lqygw")
 text = "Nächstes Level"
 
 [connection signal="button_down" from="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer/RestartButton" to="Popup/VBoxContainer/CenterContainer/HBoxContainer/MarginContainer/RestartButton" method="_on_button_down"]
