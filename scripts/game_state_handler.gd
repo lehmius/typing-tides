@@ -15,7 +15,8 @@ var highestConsecutiveStreak:int=0		# The highest consecutive amount of valid le
 var currentConsecutiveStreak:int=0		# The current amount of consecutive valid letters typed
 #var comboMeter:float=0.0				# The curent comboMeter, influencing how score gets measured (Currently not implemented)
 var wordsTyped:int=0					# How many words (=enemies) have been typed
-var score:int=0							# The total score for the level
+# Score has been refactored into a global variable to make enemies access it easier
+#var score:int=0							# The total score for the level
 var wordMistakes:int=0					# Tracking per word mistakes
 var wordCorrectLetters:int=0			# Tracking per word correct letters
 var time:float=0.0						# Time since starting the level
@@ -58,7 +59,7 @@ func _ready() -> void:
 	
 	# Load start level. THIS MUST BE DONE AFTER CREATING TIMER
 	loadLevel(-4)
-	
+	getMaxScore(1)
 
 func _physics_process(delta: float) -> void:
 	if not GlobalState.isPaused:
@@ -189,7 +190,7 @@ func receiveKey(letter:String) -> void:
 ## @param score: Float - The score associated to that enemy
 ## @returns: void
 func enemyDeathHandler(deadEnemy:Enemy,difficultyScore:float,timeToKill:float) -> void:
-	score+=currentConsecutiveStreak*difficultyScore
+	GlobalState.currentScore+=currentConsecutiveStreak*difficultyScore
 	enemyReferences.erase(deadEnemy)
 	wordCorrectLetters=0
 	wordMistakes=0
@@ -210,7 +211,7 @@ func resetPerformanceMetrics() -> void:
 	highestConsecutiveStreak=0
 	currentConsecutiveStreak=0
 	wordsTyped=0
-	score=0
+	GlobalState.currentScore=0
 	wordMistakes=0
 	wordCorrectLetters=0
 	time=0
@@ -266,7 +267,7 @@ func getCharactersPerMinute() -> float:
 ## @returns: void
 func emitPlayerPerformanceMetrics() -> void:
 	var playerPerformanceMetrics: Dictionary = {
-		"score":str(score) + " Punkte",
+		"score":str(GlobalState.currentScore) + " Punkte",
 		"charactersPerMinute": str(getCharactersPerMinute()).get_slice(".", 0),
 		"accuracy": str(getTotalAccuracy()*100).left(5) + " %",
 		"highestConsecutiveStreak":str(highestConsecutiveStreak) + " Zeichen",
@@ -290,7 +291,7 @@ func handleLevelOver() -> void:
 ##
 ## @returns: void
 func gameOverTriggered() -> void:
-	print("Your final score is:",score)
+	print("Your final score is:",GlobalState.currentScore)
 	print("GAME OVER")
 	if !endscreenExists:
 		var popup = gameover_popup.instantiate()
@@ -432,3 +433,21 @@ func cleanUpEnemies()->void:
 	for enemy in enemyReferences:
 		enemy.death()
 	enemiesToSpawn=[]
+	
+## Calculates the maximum score possible in a level
+## Due to randomness, 10 interations are calculated and the max is taken
+##
+## @returns: void
+func getMaxScore(id)->void:
+	var max=0
+	var score=0
+	for i in range(100):
+		var leveldata=DataLoader.getLevelWords(id)
+		var combo=0
+		score=0
+		for entry in leveldata:
+			for letter in entry["word"]:
+				combo+=1
+			score+=combo*entry["difficulty"]
+		if score>max: max=score
+	print(score)

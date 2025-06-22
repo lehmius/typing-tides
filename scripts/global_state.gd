@@ -4,6 +4,7 @@ var isPaused:bool=false
 var language="deutsch" # Possible Values: deutsch, english
 var levelID:int=-4
 var seenModeSelectPopup: bool = false
+var currentScore:int = 0
 
 
 var playProjectileSound: bool = true

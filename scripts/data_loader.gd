@@ -68,3 +68,4 @@ func getLevelWords(levelID:int,randomness:int=5)->Variant:
 		levelWords+=[workData[index]]
 		workData.remove_at(index)
 	return levelWords
+	

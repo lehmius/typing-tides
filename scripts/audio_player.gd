@@ -47,7 +47,6 @@ func playHover() -> void:
 		AudioPlayers["hover"].play()
 
 func playWelcomeMusic() -> void:
-	print("receiving emission")
 	if !welcomeMusicHasBeenPlayedBefore:
 		# These stop signals should never be relevant but are added for redundancy
 		AudioPlayers["level"].stop()
