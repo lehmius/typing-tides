@@ -59,7 +59,10 @@ func _ready() -> void:
 	
 	# Load start level. THIS MUST BE DONE AFTER CREATING TIMER
 	loadLevel(-4)
-	getMaxScore(1)
+	'''
+	for i in range(1,8):
+		print("Max score for level",i,":",getMaxScore(i))
+	'''
 
 func _physics_process(delta: float) -> void:
 	if not GlobalState.isPaused:
@@ -437,11 +440,11 @@ func cleanUpEnemies()->void:
 ## Calculates the maximum score possible in a level
 ## Due to randomness, 10 interations are calculated and the max is taken
 ##
-## @returns: void
-func getMaxScore(id)->void:
+## @returns: float - the max score of the level
+func getMaxScore(id)->float:
 	var max=0
 	var score=0
-	for i in range(100):
+	for i in range(20):
 		var leveldata=DataLoader.getLevelWords(id)
 		var combo=0
 		score=0
@@ -450,4 +453,4 @@ func getMaxScore(id)->void:
 				combo+=1
 			score+=combo*entry["difficulty"]
 		if score>max: max=score
-	print(score)
+	return score

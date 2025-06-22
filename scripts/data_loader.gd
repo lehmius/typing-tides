@@ -67,5 +67,11 @@ func getLevelWords(levelID:int,randomness:int=5)->Variant:
 		var index=randi_range(0,min(randomness,workData.size()-1)) #Generate a random index to take out of workData from the first "randomness" values
 		levelWords+=[workData[index]]
 		workData.remove_at(index)
+	if levelID==1:
+		levelWords.resize(15)
+	elif levelID==2:
+		levelWords.resize(25)
+	else:
+		levelWords.resize(15+5*levelID)
 	return levelWords
 	
