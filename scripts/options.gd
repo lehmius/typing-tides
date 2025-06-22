@@ -3,6 +3,7 @@ extends Control
 #@onready var dbutton = $Popup/deutsch
 #@onready var ebutton = $Popup/englisch
 @onready var difficultySlider = $Popup/HSlider
+@onready var backButton = $Back
 
 func _ready() -> void:
 	'''
@@ -20,6 +21,7 @@ func _ready() -> void:
 	difficultySlider.connect("value_changed",newDifficulty)
 	difficultySlider.mouse_entered.connect(hoverSound)
 	difficultySlider.value=GlobalState.difficulty
+	backButton.pressed.connect(close)
 	
 
 func hoverSound() -> void:
@@ -43,5 +45,8 @@ func newDifficulty(newValue) -> void:
 	
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.is_pressed() and not event.is_echo():
-		SignalBus.loadLevel.emit(-2)
-		queue_free()
+		close()
+
+func close() -> void:
+	SignalBus.loadLevel.emit(-2)
+	queue_free()

@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://eks7rlb74et5" path="res://scenes/pause_component.tscn" id="3_gxv0h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cpc1a"]
-bg_color = Color(0.141176, 0.141176, 0.141176, 0.756863)
+bg_color = Color(0.141176, 0.141176, 0.141176, 0.941176)
 
 [node name="Popup" type="Control"]
 custom_minimum_size = Vector2(640, 360)
