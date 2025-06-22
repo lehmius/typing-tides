@@ -19,8 +19,8 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
 		var keycode: int
 		keycode = event.keycode
-		if keycode==4194305:
-			GlobalState.isPaused=!GlobalState.isPaused
+		#if keycode==4194305:
+		#	GlobalState.isPaused=!GlobalState.isPaused
 		if not event.shift_pressed:
 			match keycode:
 				59:
