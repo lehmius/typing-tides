@@ -88,7 +88,10 @@ func getNextWordDEBUG() -> String:
 ## @returns: void
 func instanceEnemy(enemyData:Dictionary) -> void:
 	var nextEnemy = enemyScene.instantiate() 
-	nextEnemy.position = Vector2(680,randi_range(15,345))
+	if GlobalState.levelID==1:
+		nextEnemy.position= Vector2(randi_range(320,640),380)
+	else:
+		nextEnemy.position = Vector2(680,randi_range(15,345))
 	nextEnemy.Player = player
 	nextEnemy.text = enemyData["word"]
 	nextEnemy.score=enemyData["difficulty"]
