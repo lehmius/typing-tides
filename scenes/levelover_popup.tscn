@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdylq5j2wdmvd"]
+[gd_scene load_steps=5 format=3 uid="uid://cdylq5j2wdmvd"]
 
 [ext_resource type="PackedScene" uid="uid://bkb2d7senllgm" path="res://scenes/popup.tscn" id="1_f5b2d"]
 [ext_resource type="Script" uid="uid://crl2mv84n1n7g" path="res://scripts/levelover_popup.gd" id="1_rn41j"]
-[ext_resource type="FontFile" uid="uid://84a50x0xbb02" path="res://assets/fonts/Pixelscapes.ttf" id="2_lqygw"]
 [ext_resource type="PackedScene" uid="uid://bayificl0ex7n" path="res://scripts/score_label.tscn" id="3_rn41j"]
 [ext_resource type="PackedScene" uid="uid://bj0dl4fdchtp" path="res://scenes/load_scene_button.tscn" id="4_denbv"]
 
@@ -39,7 +38,7 @@ theme_override_constants/margin_bottom = 10
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 bbcode_enabled = true
-text = "Juhu! Geschafft!"
+text = "Juhu! Level {} Geschafft!"
 scroll_active = false
 horizontal_alignment = 1
 
