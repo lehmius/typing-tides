@@ -1,6 +1,6 @@
 extends Control
 
-@export var movementSpeed:int = 50 #Movement speed of the background in pixels/second
+@export var movementSpeed:int = 25 #Movement speed of the background in pixels/second
 
 @onready var bg1:TextureRect=$bg1
 @onready var backgrounds=[bg1]
