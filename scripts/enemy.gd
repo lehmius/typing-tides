@@ -10,7 +10,7 @@ extends CharacterBody2D
 class_name Enemy
 
 @export var text:String = "default" #: Value of the word associated with the enemy
-@export var speed:int = 225 		#: Enemy speed in pixels/second
+var speed:int = 0 		#: Enemy speed in pixels/second
 
 var target:Vector2 = Vector2(0,0) 	# Target the enemy is moving towards.
 var bobFrequency: float = 2.0		# Frequency of the bobbing motion
@@ -29,6 +29,7 @@ signal enemyDied(enemyInstance:Enemy,score:float,timeToKill:float)
 func _ready() -> void:
 	updateState()
 	setBobbingDynamics()
+	setSpeedDynamicOnDifficulty()
 
 func _physics_process(delta: float) -> void:
 	if not GlobalState.isPaused:
@@ -119,11 +120,19 @@ func attemptHit(letter:String) -> void:
 ## Sets the enemy speed based on the level and performance
 ##
 ## @returns: void
-func setSpeed()-> void:
+func setSpeedDynamicOnDifficulty()-> void:
 	var baseSpeed:int=50
 	if GlobalState.levelID==0:
-		baseSpeed=200
+		baseSpeed=50
 	elif GlobalState.levelID>0:
 		baseSpeed=25+12*GlobalState.levelID	
-	var levelmax=[96]	# Max punkte erreichbar pro level ohne fehler (ungefähr)
-	pass
+	var levelmax=[2000,98,233,676,814,1156,1679,5995]	# Max punkte erreichbar pro level ohne fehler (ungefähr)
+	var relativeProgress=GlobalState.currentScore/levelmax[GlobalState.levelID]
+	var maxProgress
+	if GlobalState.levelID==0:
+		maxProgress=5
+	else:
+		maxProgress=1
+	relativeProgress=clamp(relativeProgress,0.1,maxProgress)
+	var speedToSet=baseSpeed+relativeProgress*150
+	speed=speedToSet

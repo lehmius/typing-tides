@@ -59,10 +59,7 @@ func _ready() -> void:
 	
 	# Load start level. THIS MUST BE DONE AFTER CREATING TIMER
 	loadLevel(-4)
-	'''
-	for i in range(1,8):
-		print("Max score for level",i,":",getMaxScore(i))
-	'''
+
 
 func _physics_process(delta: float) -> void:
 	if not GlobalState.isPaused:
