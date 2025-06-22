@@ -6,3 +6,4 @@ extends Control
 
 func _ready() -> void:
 	GlobalState.setPaused()
+	

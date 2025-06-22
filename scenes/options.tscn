@@ -1,0 +1,113 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjyo3cgb4mi18"]
+
+[ext_resource type="PackedScene" uid="uid://bkb2d7senllgm" path="res://scenes/popup.tscn" id="1_c2u1v"]
+[ext_resource type="Script" uid="uid://bjlu315ppme1s" path="res://scripts/options.gd" id="1_yjkok"]
+
+[node name="Options" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yjkok")
+
+[node name="Popup" parent="." instance=ExtResource("1_c2u1v")]
+layout_mode = 1
+
+[node name="Label" type="Label" parent="Popup"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 89.0
+theme_override_font_sizes/font_size = 35
+text = "Optionen"
+horizontal_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="Popup"]
+layout_mode = 0
+offset_left = 162.0
+offset_top = 245.0
+offset_right = 514.0
+offset_bottom = 261.0
+value = 50.0
+
+[node name="deutsch" type="CheckBox" parent="Popup"]
+layout_mode = 0
+offset_left = 213.0
+offset_top = 160.0
+offset_right = 237.0
+offset_bottom = 184.0
+
+[node name="englisch" type="CheckBox" parent="Popup"]
+layout_mode = 0
+offset_left = 357.0
+offset_top = 162.0
+offset_right = 381.0
+offset_bottom = 186.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Popup"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label2" type="Label" parent="Popup"]
+layout_mode = 0
+offset_left = 237.0
+offset_top = 166.0
+offset_right = 290.0
+offset_bottom = 184.0
+text = "Deutsch"
+
+[node name="Label3" type="Label" parent="Popup"]
+layout_mode = 0
+offset_left = 381.0
+offset_top = 168.0
+offset_right = 439.0
+offset_bottom = 185.0
+text = "Englisch"
+
+[node name="Label4" type="Label" parent="Popup"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 208.0
+offset_right = 629.0
+offset_bottom = 254.0
+theme_override_font_sizes/font_size = 24
+text = "Schwierigkeit"
+horizontal_alignment = 1
+
+[node name="Label5" type="Label" parent="Popup"]
+layout_mode = 0
+offset_left = 142.0
+offset_top = 265.0
+offset_right = 186.0
+offset_bottom = 282.0
+text = "Leicht"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 121.0
+offset_right = 630.0
+offset_bottom = 154.0
+theme_override_font_sizes/font_size = 24
+text = "Sprache der Wörter"
+horizontal_alignment = 1
+
+[node name="Label5" type="Label" parent="."]
+layout_mode = 0
+offset_left = 306.0
+offset_top = 266.0
+offset_right = 351.0
+offset_bottom = 283.0
+text = "Medium"
+
+[node name="Label6" type="Label" parent="."]
+layout_mode = 0
+offset_left = 481.0
+offset_top = 266.0
+offset_right = 526.0
+offset_bottom = 283.0
+text = "Schwer"

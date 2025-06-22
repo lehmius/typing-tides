@@ -6,6 +6,8 @@ var levelID:int=-4
 var seenModeSelectPopup: bool = false
 var currentScore:int = 0
 
+var isGerman:bool=true
+var difficulty:float=1
 
 var playProjectileSound: bool = true
 var playSpawnSound: bool = true

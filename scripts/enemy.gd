@@ -125,7 +125,7 @@ func setSpeedDynamicOnDifficulty()-> void:
 	if GlobalState.levelID==0:
 		baseSpeed=50
 	elif GlobalState.levelID>0:
-		baseSpeed=25+12*GlobalState.levelID	
+		baseSpeed=20+6*GlobalState.levelID	
 	var levelmax=[2000,98,233,676,814,1156,1679,5995]	# Max punkte erreichbar pro level ohne fehler (ungefähr)
 	var relativeProgress=GlobalState.currentScore/levelmax[GlobalState.levelID]
 	var maxProgress

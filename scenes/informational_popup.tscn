@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://gfm542q4hb66"]
+[gd_scene load_steps=3 format=3 uid="uid://gfm542q4hb66"]
 
 [ext_resource type="PackedScene" uid="uid://bkb2d7senllgm" path="res://scenes/popup.tscn" id="1_1tlfo"]
 [ext_resource type="Script" uid="uid://d0svvoxajuusn" path="res://scripts/informational_popup.gd" id="1_l0x12"]
-[ext_resource type="FontFile" uid="uid://84a50x0xbb02" path="res://assets/fonts/Pixelscapes.ttf" id="2_l0x12"]
 
 [node name="InformationalPopup" type="Control"]
 layout_mode = 3

@@ -418,7 +418,7 @@ func spawnEnemies(levelData:Variant) -> void:
 func spawnNextEnemy() -> void:
 	if GlobalState.levelID>-1:
 		var endlessEndgamePoolSize:int=40		# The size at which the endless mode no longer removes entries once spawned.
-		if enemiesToSpawn.size()!=0: 
+		if enemiesToSpawn.size()!=0:
 			SignalBus.spawnEnemy.emit()
 			instanceEnemy(enemiesToSpawn[0])
 		if GlobalState.levelID!=0 or (enemiesToSpawn.size()>endlessEndgamePoolSize):
