@@ -7,7 +7,7 @@ var seenModeSelectPopup: bool = false
 var currentScore:int = 0
 
 var isGerman:bool=true
-var difficulty:float=1
+var difficulty:float=50
 
 var playProjectileSound: bool = true
 var playSpawnSound: bool = true

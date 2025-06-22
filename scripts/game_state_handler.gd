@@ -310,6 +310,7 @@ func getCurrentLevel() -> int:
 	return GlobalState.levelID
 """
 Occupied levelIDs:
+	-5	=	Options
 	-4	=	Splash screen
 	-3	=	Mode select
 	-2	=	Level select
@@ -339,6 +340,8 @@ func loadLevel(levelID:int) -> void:
 	var scene:PackedScene
 	
 	match GlobalState.getLevelID():
+		-5:
+			scene = load("res://scenes/options.tscn")
 		-4:
 			scene = load("res://scenes/welcome_splash_screen.tscn")
 		-3:

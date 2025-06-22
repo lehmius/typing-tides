@@ -80,10 +80,18 @@ offset_right = 460.0
 offset_bottom = 320.0
 
 [node name="Button-3" type="Button" parent="ButtonContainer"]
-custom_minimum_size = Vector2(128, 97)
+custom_minimum_size = Vector2(128, 45)
 layout_mode = 0
 offset_left = 484.0
 offset_top = 223.0
 offset_right = 612.0
-offset_bottom = 320.0
+offset_bottom = 268.0
 text = "Hauptmenü"
+
+[node name="ButtonOpt" type="Button" parent="."]
+layout_mode = 0
+offset_left = 484.0
+offset_top = 274.0
+offset_right = 612.0
+offset_bottom = 320.0
+text = "Options"

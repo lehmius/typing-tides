@@ -9,6 +9,10 @@ func _ready() -> void:
 	set_text(info.text)
 	button.pressed.connect(_on_button_down)
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.is_pressed() and not event.is_echo():
+		GlobalState.setUpaused()
+		self.queue_free()
 
 func _on_button_down() -> void:
 	GlobalState.setUpaused()

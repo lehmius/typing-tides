@@ -134,5 +134,5 @@ func setSpeedDynamicOnDifficulty()-> void:
 	else:
 		maxProgress=1
 	relativeProgress=clamp(relativeProgress,0.1,maxProgress)
-	var speedToSet=baseSpeed+relativeProgress*150
+	var speedToSet=(baseSpeed+relativeProgress*150)*clamp(GlobalState.difficulty/50,0.25,10)
 	speed=speedToSet
