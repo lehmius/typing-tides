@@ -10,6 +10,7 @@ func _ready() -> void:
 ## @param playerPerformanceMetrcis: Dictionary containing the player stats
 ## @returns: void
 func _on_playerPerformanceMetrics(playerPerformanceMetrics: Dictionary) -> void:
+	playerPerformanceMetrics["score"]=float(playerPerformanceMetrics["score"])*clamp(GlobalState.difficulty/50,0.25,2)
 	append_text("""[center][table=2]
 	[cell][left]score[/left][/cell][cell][left]{score}[/left][/cell]
 	[cell][left]Zeichen/min[/left][/cell][cell][left]{charactersPerMinute}[/left][/cell]

@@ -429,7 +429,6 @@ func spawnNextEnemy() -> void:
 		enemySpawnTimer.stop()
 		enemySpawnTimer.wait_time=min(0.95*lastTTK,enemySpawnTimerDuration)
 		enemySpawnTimer.start() # Reset the spawn timer
-		#TODO: dynamically change spawn timer based on player performance
 		# Semi inplemented, very basic logic so far, should take into account word difficulty too.
 
 ## Cleans up enemies, enemy references etc.
