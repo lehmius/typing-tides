@@ -62,19 +62,23 @@ func getLevelWords(levelID:int,randomness:int=5)->Variant:
 		rawdata=loadDatabaseData()
 	# Note, this loads teh database data again each time a level is loaded and is very inefficient - but writing it into a variable breaks it.
 	var workData = filterJson(rawdata,"level",levelID,true)
+	
+	workData.shuffle()
+	if levelID==1:
+		workData.resize(15)
+	elif levelID==2:
+		workData.resize(25)
+	elif levelID==0:
+		workData.resize(150)
+	else:
+		workData.resize(15+5*levelID)
+		
 	workData=sortByDifficulty(workData)
 	# Load the words in ascending difficulty into the levelWords array with some randomness
 	while workData.size()>0:
 		var index=randi_range(0,min(randomness,workData.size()-1)) #Generate a random index to take out of workData from the first "randomness" values
 		levelWords+=[workData[index]]
 		workData.remove_at(index)
-	if levelID==1:
-		levelWords.resize(15)
-	elif levelID==2:
-		levelWords.resize(25)
-	elif levelID==0:
-		levelWords.resize(150)
-	else:
-		levelWords.resize(15+5*levelID)
+	
 	return levelWords
 	
