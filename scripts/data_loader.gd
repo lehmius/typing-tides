@@ -3,7 +3,13 @@ extends Node
 var rawdata:Variant=null
 var data;
 
-	
+
+""" DEBUG
+func _ready() -> void:
+	for i in range(1,8):
+		getLevelWords(i)
+"""
+		
 ## Load the appropriate data from the database for the level provided.
 ##
 ## @returns: Variant - the json data (full)
@@ -62,7 +68,7 @@ func getLevelWords(levelID:int,randomness:int=5)->Variant:
 		rawdata=loadDatabaseData()
 	# Note, this loads teh database data again each time a level is loaded and is very inefficient - but writing it into a variable breaks it.
 	var workData = filterJson(rawdata,"level",levelID,true)
-	
+	var oldSize=workData.size()
 	workData.shuffle()
 	if levelID==1:
 		workData.resize(15)
@@ -72,6 +78,7 @@ func getLevelWords(levelID:int,randomness:int=5)->Variant:
 		workData.resize(150)
 	else:
 		workData.resize(15+5*levelID)
+	if workData.size()<oldSize: push_error("The data in the database is too small! Some enemy arrays were filled with null pointers!")
 		
 	workData=sortByDifficulty(workData)
 	# Load the words in ascending difficulty into the levelWords array with some randomness

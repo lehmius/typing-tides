@@ -55,8 +55,7 @@ func _ready() -> void:
 	# Create Player and turn him invisible
 	instancePlayer()
 	player.visible=false
-	
-	
+
 	# Load start level. THIS MUST BE DONE AFTER CREATING TIMER
 	loadLevel(-4)
 
