@@ -15,6 +15,8 @@ func _ready() -> void:
 	restart_button.mouse_entered.connect(hoverSound)
 	menu_button.mouse_entered.connect(hoverSound)
 	next_level_button.mouse_entered.connect(hoverSound)
+	if GlobalState.getLevelID()==7:
+		next_level_button.queue_free()
 
 func hoverSound() -> void:
 	SignalBus.buttonHover.emit()
