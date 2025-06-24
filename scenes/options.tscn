@@ -89,6 +89,7 @@ text = "Beliebige Taste drücken um zurück zum Menü zu gelangen"
 horizontal_alignment = 1
 
 [node name="Back" type="Button" parent="."]
+z_index = 750
 layout_mode = 0
 offset_left = 21.0
 offset_top = 18.0
